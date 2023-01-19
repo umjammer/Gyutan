@@ -29,64 +29,40 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package org.Gyutan;
+package org.icn.gyutan;
 
-public class Gyutan_JPCommonLabelAccentPhrase {
-	int accent;
-	String emotion;
-	Gyutan_JPCommonLabelWord head;
-	Gyutan_JPCommonLabelWord tail;
-	Gyutan_JPCommonLabelAccentPhrase prev;
-	Gyutan_JPCommonLabelAccentPhrase next;
-	Gyutan_JPCommonLabelBreathGroup up;
-	
-	void initialize(int acc, String emotion,
-					Gyutan_JPCommonLabelWord head, Gyutan_JPCommonLabelWord tail,
-					Gyutan_JPCommonLabelAccentPhrase prev, Gyutan_JPCommonLabelAccentPhrase next,
-					Gyutan_JPCommonLabelBreathGroup up){
-		this.accent  = acc;
-		this.emotion = emotion;
-		this.head    = head;
-		this.tail    = tail;
-		this.prev    = prev;
-		this.next    = next;
-		this.up      = up;
-	}
-	
-	int index_accent_phrase_in_breath_group(){
-		int i=0;
-		for(Gyutan_JPCommonLabelAccentPhrase index = up.head; index != null; index = index.next){
-			i++;
-			if(index == this)
-				break;
-		}
-		
-		return i;
-	}
-	
-	int index_accent_phrase_in_utterance(){
-		int i = 0;
-		for(Gyutan_JPCommonLabelAccentPhrase index = this;index != null; index = index.prev)
-			i++;
-		return i;
-	}
-	
-	int count_accent_phrase_in_breath_group(){
-		int i=0;
-		for(Gyutan_JPCommonLabelAccentPhrase index = up.head;index != null;index = index.next){
-			i++;
-			if(index == up.tail)
-				break;
-		}
-		
-		return i;
-	}
-		
-	int count_accent_phrase_in_utterance(){
-		int i = 0;
-		for(Gyutan_JPCommonLabelAccentPhrase index = this.next;index != null; index = index.next)
-			i++;
-		
-		return index_accent_phrase_in_utterance() + i;
-	}
+public class JPCommonLabelPhoneme {
+    static final String unvoice_list[] = {
+            "a", "A",
+            "i", "I",
+            "u", "U",
+            "e", "E",
+            "o", "O"
+    };
+
+    String phoneme;
+    JPCommonLabelPhoneme prev;
+    JPCommonLabelPhoneme next;
+    JPCommonLabelMora up;
+
+    void initialize(String phoneme, JPCommonLabelPhoneme prev, JPCommonLabelPhoneme next, JPCommonLabelMora up) {
+        //System.err.printf("#### phoneme:%s\n", phoneme);
+        this.phoneme = phoneme;
+        this.prev = prev;
+        this.next = next;
+        this.up = up;
+    }
+
+    void convert_unvoice() {
+        for (int i = 0; i < unvoice_list.length; i += 2) {
+            if (phoneme.equals(unvoice_list[i]) == true) {
+                phoneme = unvoice_list[i + 1];
+                return;
+            }
+        }
+
+        System.err.printf("WARNING: JPCommonLabelPhoneme.convert_unvoice(): %s cannot be unvoiced.", phoneme);
+    }
+
+
 }

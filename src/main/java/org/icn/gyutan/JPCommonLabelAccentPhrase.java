@@ -29,69 +29,64 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package org.Gyutan;
+package org.icn.gyutan;
 
-public class Gyutan_NJDLongVowelRule {
-	static final String long_vowel_table[] = {
-		   "エイ", "エー",
-		   "ケイ", "ケー",
-		   "セイ", "セー",
-		   "テイ", "テー",
-		   "ネイ", "ネー",
-		   "ヘイ", "ヘー",
-		   "メイ", "メー",
-		   "レイ", "レー",
-		   "ゲイ", "ゲー",
-		   "ゼイ", "ゼー",
-		   "デイ", "デー",
-		   "ベイ", "ベー",
-		   "ペイ", "ペー",
-		   "ヱイ", "ヱー"
-		};
+public class JPCommonLabelAccentPhrase {
+    int accent;
+    String emotion;
+    JPCommonLabelWord head;
+    JPCommonLabelWord tail;
+    JPCommonLabelAccentPhrase prev;
+    JPCommonLabelAccentPhrase next;
+    JPCommonLabelBreathGroup up;
 
-	static int strtopcmp(String str, String pattern){
-		char[] strat = str.toCharArray();
-		char[] patat = pattern.toCharArray();
-		
-		for(int i=0;;i++){
-			if(i == pattern.length())
-				return i;
-			if(i == str.length())
-				return -1;
-			//if(str.charAt(i) != pattern.charAt(i))
-			if(strat[i] != patat[i])
-				return -1;
-		}
-	}
-	
-	static void set_long_vowel(Gyutan_NJD njd){
-		for(Gyutan_NJDNode node = njd.head; node != null; node = node.next){
-			String str = node.get_pronunciation();
-			int len = 0;
-			if(str == null)
-				len = 0;
-			else
-				len = str.length();
-			
-			StringBuilder buff = new StringBuilder();
-			int bbyte = -1;
-			for(int i=0;i < len;i+=bbyte){
-				bbyte = -1;
-				
-				for(int j=0;j < long_vowel_table.length;j+=2){
-					bbyte = strtopcmp(str.substring(i), long_vowel_table[j]);
-					if(bbyte > 0){
-						buff.append(long_vowel_table[j + 1]);
-						break;
-					}
-				}
-				if(bbyte < 0){
-					bbyte = 1;
-					buff.append(str.charAt(i));
-				}
-			}
-			
-			node.set_pronunciation(buff.toString());
-		}
-	}
+    void initialize(int acc, String emotion,
+                    JPCommonLabelWord head, JPCommonLabelWord tail,
+                    JPCommonLabelAccentPhrase prev, JPCommonLabelAccentPhrase next,
+                    JPCommonLabelBreathGroup up) {
+        this.accent = acc;
+        this.emotion = emotion;
+        this.head = head;
+        this.tail = tail;
+        this.prev = prev;
+        this.next = next;
+        this.up = up;
+    }
+
+    int index_accent_phrase_in_breath_group() {
+        int i = 0;
+        for (JPCommonLabelAccentPhrase index = up.head; index != null; index = index.next) {
+            i++;
+            if (index == this)
+                break;
+        }
+
+        return i;
+    }
+
+    int index_accent_phrase_in_utterance() {
+        int i = 0;
+        for (JPCommonLabelAccentPhrase index = this; index != null; index = index.prev)
+            i++;
+        return i;
+    }
+
+    int count_accent_phrase_in_breath_group() {
+        int i = 0;
+        for (JPCommonLabelAccentPhrase index = up.head; index != null; index = index.next) {
+            i++;
+            if (index == up.tail)
+                break;
+        }
+
+        return i;
+    }
+
+    int count_accent_phrase_in_utterance() {
+        int i = 0;
+        for (JPCommonLabelAccentPhrase index = this.next; index != null; index = index.next)
+            i++;
+
+        return index_accent_phrase_in_utterance() + i;
+    }
 }

@@ -29,80 +29,13 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package org.Gyutan;
+package org.icn.gyutan;
 
-public class Gyutan_JPCommonLabelMora {
-	String mora;
-	Gyutan_JPCommonLabelPhoneme head;
-	Gyutan_JPCommonLabelPhoneme tail;
-	Gyutan_JPCommonLabelMora prev;
-	Gyutan_JPCommonLabelMora next;
-	Gyutan_JPCommonLabelWord up;
-	
-	void initialize(String mora, Gyutan_JPCommonLabelPhoneme head, 
-					Gyutan_JPCommonLabelPhoneme tail, Gyutan_JPCommonLabelMora prev, 
-					Gyutan_JPCommonLabelMora next, Gyutan_JPCommonLabelWord up){
-		this.mora = mora;
-		this.head = head;
-		this.tail = tail;
-		this.prev = prev;
-		this.next = next;
-		this.up = up;
-	}
-	
-	int index_mora_in_accent_phrase(){
-		int i = 0;
-		for(Gyutan_JPCommonLabelMora index = up.up.head.head; index != null; index = index.next){
-			i++;
-			if(index == this)
-				break;
-		}
-		return i;
-	}
-	
-	int index_mora_in_breath_group(){
-		int i = 0;
-		for(Gyutan_JPCommonLabelMora index = up.up.up.head.head.head; index != null; index = index.next){
-			i++;
-			if(index == this)
-				break;
-		}
-		return i;
-	}
-	
-	int index_mora_in_utterance(){
-		int i = 0;
-		for(Gyutan_JPCommonLabelMora index = this; index != null; index = index.prev)
-			i++;
-		return i;
-	}
-	
-	int count_mora_in_accent_phrase(){
-		int i=0;
-		for(Gyutan_JPCommonLabelMora index = up.up.head.head; index != null;index = index.next){
-			i++;
-			if(index == up.up.tail.tail)
-				break;
-		}
-		return i;
-	}
-	
-	int count_mora_in_breath_group(){
-		int i=0;
-		for(Gyutan_JPCommonLabelMora index = up.up.up.head.head.head;index != null; index = index.next){
-			i++;
-			if(index == up.up.up.tail.tail.tail)
-				break;
-		}
-		
-		return i;
-	}
-	
-	int count_mora_in_utterance(){
-		int i = 0;
-		for(Gyutan_JPCommonLabelMora index = this.next; index != null; index = index.next)
-			i++;
-		return index_mora_in_utterance() + i;
-	}
+public class NJDUnvoicedVowelRuleMoraInformation {
+    String mora;
+    NJDNode nlink;
+    int flag;
+    int size;
+    int midx;
+    int atype;
 }
-

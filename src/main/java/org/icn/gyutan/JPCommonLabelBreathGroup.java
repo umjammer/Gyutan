@@ -29,35 +29,35 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package org.Gyutan;
+package org.icn.gyutan;
 
-public class Gyutan_JPCommonLabelBreathGroup {
-	Gyutan_JPCommonLabelAccentPhrase head;
-	Gyutan_JPCommonLabelAccentPhrase tail;
-	Gyutan_JPCommonLabelBreathGroup prev;
-	Gyutan_JPCommonLabelBreathGroup next;
-	
-	void initialize(Gyutan_JPCommonLabelAccentPhrase head, Gyutan_JPCommonLabelAccentPhrase tail,
-					Gyutan_JPCommonLabelBreathGroup prev, Gyutan_JPCommonLabelBreathGroup next){
-		this.head = head;
-		this.tail = tail;
-		this.prev = prev;
-		this.next = next;
-	}
-	
-	int index_breath_group_in_utterance(){
-		int i = 0;
-		for(Gyutan_JPCommonLabelBreathGroup index = this; index != null; index = index.prev)
-			i++;
-		
-		return i;
-	}
-	
-	int count_breath_group_in_utterance(){
-		int i = 0;
-		for(Gyutan_JPCommonLabelBreathGroup index = next;index != null; index = index.next)
-			i++;
-		
-		return index_breath_group_in_utterance() + i;
-	}
+public class JPCommonLabelBreathGroup {
+    JPCommonLabelAccentPhrase head;
+    JPCommonLabelAccentPhrase tail;
+    JPCommonLabelBreathGroup prev;
+    JPCommonLabelBreathGroup next;
+
+    void initialize(JPCommonLabelAccentPhrase head, JPCommonLabelAccentPhrase tail,
+                    JPCommonLabelBreathGroup prev, JPCommonLabelBreathGroup next) {
+        this.head = head;
+        this.tail = tail;
+        this.prev = prev;
+        this.next = next;
+    }
+
+    int index_breath_group_in_utterance() {
+        int i = 0;
+        for (JPCommonLabelBreathGroup index = this; index != null; index = index.prev)
+            i++;
+
+        return i;
+    }
+
+    int count_breath_group_in_utterance() {
+        int i = 0;
+        for (JPCommonLabelBreathGroup index = next; index != null; index = index.next)
+            i++;
+
+        return index_breath_group_in_utterance() + i;
+    }
 }

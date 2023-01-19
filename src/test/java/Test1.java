@@ -52,7 +52,7 @@ public class Test1 {
 
     @Test
     void test1() throws Exception {
-        gyutan.main(new String[] {
+        Gyutan.main(new String[] {
                 "-x",
                 sen_home,
                 "-m",

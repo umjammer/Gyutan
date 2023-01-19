@@ -29,40 +29,102 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package org.Gyutan;
+package org.icn.gyutan;
 
-public class Gyutan_JPCommonLabelPhoneme {
-	static final String unvoice_list[] = {
-		"a", "A",
-		"i", "I",
-		"u", "U",
-		"e", "E",
-		"o", "O"
-		};
+import java.io.PrintStream;
 
-	String phoneme;
-	Gyutan_JPCommonLabelPhoneme prev;
-	Gyutan_JPCommonLabelPhoneme next;
-	Gyutan_JPCommonLabelMora up;
 
-	void initialize(String phoneme, Gyutan_JPCommonLabelPhoneme prev, Gyutan_JPCommonLabelPhoneme next, Gyutan_JPCommonLabelMora up){
-		//System.err.printf("#### phoneme:%s\n", phoneme);
-		this.phoneme = phoneme;
-		this.prev = prev;
-		this.next = next;
-		this.up = up;
-	}
-	
-	void convert_unvoice(){
-		for(int i=0;i < unvoice_list.length;i+=2){
-			if(phoneme.equals(unvoice_list[i]) == true){
-				phoneme = unvoice_list[i+1];
-				return;
-			}
-		}
-		
-		System.err.printf("WARNING: JPCommonLabelPhoneme.convert_unvoice(): %s cannot be unvoiced.", phoneme);
-	}
-	
-	
+public class JPCommonNode {
+    String pronunciation;
+    String pos;
+    String ctype;
+    String cform;
+    int accent;
+    int chain_flag;
+    JPCommonNode prev;
+    JPCommonNode next;
+
+    JPCommonNode() {
+        initialize();
+    }
+
+    void initialize() {
+        pronunciation = null;
+        pos = null;
+        ctype = null;
+        cform = null;
+        accent = 0;
+        chain_flag = -1;
+        prev = null;
+        next = null;
+    }
+
+    void set_pronunciation(String str) {
+        pronunciation = str;
+    }
+
+    void set_pos(String str) {
+        pos = str;
+    }
+
+    void set_ctype(String str) {
+        ctype = str;
+    }
+
+    void set_cform(String str) {
+        cform = str;
+    }
+
+    void set_accent(int acc) {
+        accent = acc;
+    }
+
+    void set_chain_flag(int flag) {
+        chain_flag = flag;
+    }
+
+    String get_pronunciation() {
+        return pronunciation;
+    }
+
+    String get_pos() {
+        return pos;
+    }
+
+    String get_ctype() {
+        return ctype;
+    }
+
+    String get_cform() {
+        return cform;
+    }
+
+    int get_accent() {
+        return accent;
+    }
+
+    int get_chain_flag() {
+        return chain_flag;
+    }
+
+    void copy(JPCommonNode node) {
+        set_pronunciation(node.pronunciation);
+        set_pos(node.pos);
+        set_ctype(node.ctype);
+        set_cform(node.cform);
+        set_accent(node.accent);
+        set_chain_flag(node.chain_flag);
+    }
+
+    void print() {
+        fprint(System.out);
+    }
+
+    void fprint(PrintStream ps) {
+        ps.printf("--- node ---\n");
+        ps.printf("%s,%s,%s,%s,%d,%d\n",
+                pronunciation, pos, ctype, cform, accent, chain_flag);
+        ps.printf("--- END ---\n");
+
+    }
 }
