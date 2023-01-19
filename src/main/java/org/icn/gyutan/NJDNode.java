@@ -349,8 +349,7 @@ public class NJDNode {
                             StringBuilder buff_pron, StringBuilder buff_acc) {
 
         StringBuilder buff = new StringBuilder();
-        int[] index = new int[1];
-        index[0] = 0;
+        int[] index = new int[] {0};
 
         get_token_from_string(str, index, buff_string, ',');
         get_token_from_string(str, index, buff, ',');
@@ -375,9 +374,9 @@ public class NJDNode {
         set_chain_rule(buff.toString());
 
         get_token_from_string(str, index, buff, ',');
-        if (buff.toString().equals("1") == true)
+        if (buff.toString().equals("1"))
             set_chain_flag(1);
-        else if (buff.toString().equals("0") == true)
+        else if (buff.toString().equals("0"))
             set_chain_flag(0);
     }
 
@@ -398,8 +397,7 @@ public class NJDNode {
         set_read(buff_read.toString());
         set_pronunciation(buff_pron.toString());
 
-        int[] index_acc = new int[1];
-        index_acc[0] = 0;
+        int[] index_acc = new int[] {0};
         StringBuilder buff = new StringBuilder();
         get_token_from_string(buff_acc.toString(), index_acc, buff, '/');
 
@@ -421,16 +419,11 @@ public class NJDNode {
 
     private void parse_chained_word(StringBuilder buff_string, StringBuilder buff_orig, StringBuilder buff_read,
                                     StringBuilder buff_pron, StringBuilder buff_acc, int count) {
-        int[] index_string = new int[1];
-        index_string[0] = 0;
-        int[] index_orig = new int[1];
-        index_orig[0] = 0;
-        int[] index_read = new int[1];
-        index_read[0] = 0;
-        int[] index_pron = new int[1];
-        index_pron[0] = 0;
-        int[] index_acc = new int[1];
-        index_acc[0] = 0;
+        int[] index_string = new int[] {0};
+        int[] index_orig = new int[] {0};
+        int[] index_read = new int[] {0};
+        int[] index_pron = new int[] {0};
+        int[] index_acc = new int[] {0};
 
         StringBuilder buff = new StringBuilder();
         NJDNode node = this;

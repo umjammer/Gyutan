@@ -32,7 +32,7 @@
 package org.icn.gyutan;
 
 public class NJDLongVowelRule {
-    static final String long_vowel_table[] = {
+    static final String[] long_vowel_table = {
             "エイ", "エー",
             "ケイ", "ケー",
             "セイ", "セー",

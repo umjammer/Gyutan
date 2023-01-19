@@ -124,104 +124,104 @@ public class NJDAccentPhraseRule {
     }
 
     static void rule_002(NJDNode node) {
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI) == true)
-            if (node.get_pos().equals(ACCENT_PHRASE_MEISHI) == true) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI))
+            if (node.get_pos().equals(ACCENT_PHRASE_MEISHI)) {
                 node.set_chain_flag(1);
             }
     }
 
     static void rule_003(NJDNode node) {
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI) == true)
-            if (node.get_pos().equals(ACCENT_PHRASE_MEISHI) == true) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI))
+            if (node.get_pos().equals(ACCENT_PHRASE_MEISHI)) {
                 node.set_chain_flag(0);
             }
     }
 
     static void rule_004(NJDNode node) {
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI) == true)
-            if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_KEIYOUDOUSHI_GOKAN) == true)
-                if (node.get_pos().equals(ACCENT_PHRASE_MEISHI) == true) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI))
+            if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_KEIYOUDOUSHI_GOKAN))
+                if (node.get_pos().equals(ACCENT_PHRASE_MEISHI)) {
                     node.set_chain_flag(0);
                 }
     }
 
     static void rule_005(NJDNode node) {
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_DOUSHI) == true)
-            if (node.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI) == true) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_DOUSHI))
+            if (node.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI)) {
                 node.set_chain_flag(0);
-            } else if (node.get_pos().equals(ACCENT_PHRASE_MEISHI) == true) {
+            } else if (node.get_pos().equals(ACCENT_PHRASE_MEISHI)) {
                 node.set_chain_flag(0);
             }
     }
 
     static void rule_006(NJDNode node) {
-        if (node.get_pos().equals(ACCENT_PHRASE_FUKUSHI) == true
-                || node.prev.get_pos().equals(ACCENT_PHRASE_FUKUSHI) == true
-                || node.get_pos().equals(ACCENT_PHRASE_SETSUZOKUSHI) == true
-                || node.prev.get_pos().equals(ACCENT_PHRASE_SETSUZOKUSHI) == true
-                || node.get_pos().equals(ACCENT_PHRASE_RENTAISHI) == true
-                || node.prev.get_pos().equals(ACCENT_PHRASE_RENTAISHI) == true) {
+        if (node.get_pos().equals(ACCENT_PHRASE_FUKUSHI)
+                || node.prev.get_pos().equals(ACCENT_PHRASE_FUKUSHI)
+                || node.get_pos().equals(ACCENT_PHRASE_SETSUZOKUSHI)
+                || node.prev.get_pos().equals(ACCENT_PHRASE_SETSUZOKUSHI)
+                || node.get_pos().equals(ACCENT_PHRASE_RENTAISHI)
+                || node.prev.get_pos().equals(ACCENT_PHRASE_RENTAISHI)) {
             node.set_chain_flag(0);
         }
     }
 
     static void rule_007(NJDNode node) {
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI) == true)
-            if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_FUKUSHI_KANOU) == true) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI))
+            if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_FUKUSHI_KANOU)) {
                 node.set_chain_flag(0);
             }
 
-        if (node.get_pos().equals(ACCENT_PHRASE_MEISHI) == true)
-            if (node.get_pos_group1().equals(ACCENT_PHRASE_FUKUSHI_KANOU) == true) {
+        if (node.get_pos().equals(ACCENT_PHRASE_MEISHI))
+            if (node.get_pos_group1().equals(ACCENT_PHRASE_FUKUSHI_KANOU)) {
                 node.set_chain_flag(0);
             }
     }
 
     static void rule_008(NJDNode node) {
-        if (node.get_pos().equals(ACCENT_PHRASE_JODOUSHI) == true) {
+        if (node.get_pos().equals(ACCENT_PHRASE_JODOUSHI)) {
             node.set_chain_flag(1);
         }
-        if (node.get_pos().equals(ACCENT_PHRASE_JOSHI) == true) {
+        if (node.get_pos().equals(ACCENT_PHRASE_JOSHI)) {
             node.set_chain_flag(1);
         }
     }
 
     static void rule_009(NJDNode node) {
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_JODOUSHI) == true)
-            if (node.get_pos().equals(ACCENT_PHRASE_JODOUSHI) == false &&
-                    node.get_pos().equals(ACCENT_PHRASE_JOSHI) == false) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_JODOUSHI))
+            if (!node.get_pos().equals(ACCENT_PHRASE_JODOUSHI) &&
+                    !node.get_pos().equals(ACCENT_PHRASE_JOSHI)) {
                 node.set_chain_flag(0);
             }
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_JOSHI) == true)
-            if (node.get_pos().equals(ACCENT_PHRASE_JODOUSHI) == false &&
-                    node.get_pos().equals(ACCENT_PHRASE_JOSHI) == false) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_JOSHI))
+            if (!node.get_pos().equals(ACCENT_PHRASE_JODOUSHI) &&
+                    !node.get_pos().equals(ACCENT_PHRASE_JOSHI)) {
                 node.set_chain_flag(0);
             }
     }
 
     static void rule_010(NJDNode node) {
-        if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_SETSUBI) == true)
-            if (node.get_pos().equals(ACCENT_PHRASE_MEISHI) == true) {
+        if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_SETSUBI))
+            if (node.get_pos().equals(ACCENT_PHRASE_MEISHI)) {
                 node.set_chain_flag(0);
             }
     }
 
     static void rule_011(NJDNode node) {
-        if (node.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI) == true)
-            if (node.get_pos_group1().equals(ACCENT_PHRASE_HIJIRITSU) == true) {
-                if (node.prev.get_pos().equals(ACCENT_PHRASE_DOUSHI) == true) {
+        if (node.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI))
+            if (node.get_pos_group1().equals(ACCENT_PHRASE_HIJIRITSU)) {
+                if (node.prev.get_pos().equals(ACCENT_PHRASE_DOUSHI)) {
                     if (strtopcmp(node.prev.get_cform(), ACCENT_PHRASE_RENYOU) != -1) {
                         node.set_chain_flag(1);
                     }
-                } else if (node.prev.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI) == true) {
+                } else if (node.prev.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI)) {
                     if (strtopcmp(node.prev.get_cform(), ACCENT_PHRASE_RENYOU) != -1) {
                         node.set_chain_flag(1);
                     }
-                } else if (node.prev.get_pos().equals(ACCENT_PHRASE_JOSHI) == true) {
-                    if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_SETSUZOKUJOSHI) == true) {
-                        if (node.prev.get_string().equals(ACCENT_PHRASE_TE) == true) {
+                } else if (node.prev.get_pos().equals(ACCENT_PHRASE_JOSHI)) {
+                    if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_SETSUZOKUJOSHI)) {
+                        if (node.prev.get_string().equals(ACCENT_PHRASE_TE)) {
                             node.set_chain_flag(1);
-                        } else if (node.prev.get_string().equals(ACCENT_PHRASE_DE) == true) {
+                        } else if (node.prev.get_string().equals(ACCENT_PHRASE_DE)) {
                             node.set_chain_flag(1);
                         }
                     }
@@ -230,14 +230,14 @@ public class NJDAccentPhraseRule {
     }
 
     static void rule_012(NJDNode node) {
-        if (node.get_pos().equals(ACCENT_PHRASE_DOUSHI) == true)
-            if (node.get_pos_group1().equals(ACCENT_PHRASE_HIJIRITSU) == true) {
-                if (node.prev.get_pos().equals(ACCENT_PHRASE_DOUSHI) == true) {
+        if (node.get_pos().equals(ACCENT_PHRASE_DOUSHI))
+            if (node.get_pos_group1().equals(ACCENT_PHRASE_HIJIRITSU)) {
+                if (node.prev.get_pos().equals(ACCENT_PHRASE_DOUSHI)) {
                     if (strtopcmp(node.prev.get_cform(), ACCENT_PHRASE_RENYOU) != -1) {
                         node.set_chain_flag(1);
                     }
-                } else if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI) == true) {
-                    if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_SAHEN_SETSUZOKU) == true) {
+                } else if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI)) {
+                    if (node.prev.get_pos_group1().equals(ACCENT_PHRASE_SAHEN_SETSUZOKU)) {
                         node.set_chain_flag(1);
                     }
                 }
@@ -245,43 +245,43 @@ public class NJDAccentPhraseRule {
     }
 
     static void rule_013(NJDNode node) {
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI) == true) {
-            if (node.get_pos().equals(ACCENT_PHRASE_DOUSHI) == true ||
-                    node.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI) == true ||
-                    node.get_pos_group1().equals(ACCENT_PHRASE_KEIYOUDOUSHI_GOKAN) == true) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI)) {
+            if (node.get_pos().equals(ACCENT_PHRASE_DOUSHI) ||
+                    node.get_pos().equals(ACCENT_PHRASE_KEIYOUSHI) ||
+                    node.get_pos_group1().equals(ACCENT_PHRASE_KEIYOUDOUSHI_GOKAN)) {
                 node.set_chain_flag(0);
             }
         }
     }
 
     static void rule_014(NJDNode node) {
-        if (node.get_pos().equals(ACCENT_PHRASE_KIGOU) == true ||
-                node.prev.get_pos().equals(ACCENT_PHRASE_KIGOU) == true) {
+        if (node.get_pos().equals(ACCENT_PHRASE_KIGOU) ||
+                node.prev.get_pos().equals(ACCENT_PHRASE_KIGOU)) {
             node.set_chain_flag(0);
         }
     }
 
     static void rule_015(NJDNode node) {
-        if (node.get_pos_group3().equals(ACCENT_PHRASE_SETTOUSHI) == true) {
+        if (node.get_pos_group3().equals(ACCENT_PHRASE_SETTOUSHI)) {
             node.set_chain_flag(0);
         }
     }
 
     static void rule_016(NJDNode node) {
-        if (node.prev.get_pos_group3().equals(ACCENT_PHRASE_SEI) == true) {
+        if (node.prev.get_pos_group3().equals(ACCENT_PHRASE_SEI)) {
             node.set_chain_flag(0);
         }
     }
 
     static void rule_017(NJDNode node) {
-        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI) == true &&
-                node.get_pos_group3().equals(ACCENT_PHRASE_MEI) == true) {
+        if (node.prev.get_pos().equals(ACCENT_PHRASE_MEISHI) &&
+                node.get_pos_group3().equals(ACCENT_PHRASE_MEI)) {
             node.set_chain_flag(0);
         }
     }
 
     static void rule_018(NJDNode node) {
-        if (node.get_pos_group1().equals(ACCENT_PHRASE_SETSUBI) == true) {
+        if (node.get_pos_group1().equals(ACCENT_PHRASE_SETSUBI)) {
             node.set_chain_flag(1);
         }
     }

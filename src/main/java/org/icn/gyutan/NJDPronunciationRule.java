@@ -525,17 +525,17 @@ public class NJDPronunciationRule {
             if (node.get_mora_size() == 0) {
                 node.set_read(null);
                 node.set_pronunciation(null);
-                if (node.get_pos().equals(PRONUNCIATION_KIGOU) == true ||
-                        node.get_pos_group1().equals(PRONUNCIATION_KAZU) == true) {
+                if (node.get_pos().equals(PRONUNCIATION_KIGOU) ||
+                        node.get_pos_group1().equals(PRONUNCIATION_KAZU)) {
                     for (int i = 0; i < pronunciation_symbol_list.length; i += 2)
-                        if (node.get_string().equals(pronunciation_symbol_list[i]) == true) {
+                        if (node.get_string().equals(pronunciation_symbol_list[i])) {
                             node.set_read(pronunciation_symbol_list[i + 1]);
                             node.set_pronunciation(pronunciation_symbol_list[i + 1]);
                             break;
                         }
-                } else if (node.get_pronunciation().equals("*") == true) {
-                    //node.fprint(System.err);
-                    //System.err.printf("pron:%s\n", node.get_pronunciation());
+                } else if (node.get_pronunciation().equals("*")) {
+//                    node.fprint(System.err);
+//                    System.err.printf("pron:%s\n", node.get_pronunciation());
                     String str = node.get_string();
                     for (int pos = 0; pos < str.length(); ) {
                         int i = 0;
@@ -554,9 +554,9 @@ public class NJDPronunciationRule {
                             pos++;
                         }
                     }
-                    //System.err.printf("## FILLER ##\n");
-                    //node.fprint(System.err);
-                    //System.err.printf("## END ##\n");
+//                    System.err.printf("## FILLER ##\n");
+//                    node.fprint(System.err);
+//                    System.err.printf("## END ##\n");
 
                     node.set_pos(PRONUNCIATION_FILLER);
                     node.set_pos_group1(null);
@@ -570,19 +570,19 @@ public class NJDPronunciationRule {
     static void set_pronunciation_sub2(NJD njd) {
         for (NJDNode node = njd.head; node != null; node = node.next) {
             if (node.next != null &&
-                    node.next.equals(PRONUNCIATION_U) == true &&
-                    node.next.equals(PRONUNCIATION_JODOUSHI) == true &&
-                    (node.equals(PRONUNCIATION_DOUSHI) == true ||
-                            node.equals(PRONUNCIATION_JODOUSHI) == true) &&
+                    node.next.get_string().equals(PRONUNCIATION_U) &&
+                    node.next.get_pos().equals(PRONUNCIATION_JODOUSHI) &&
+                    (node.get_pos().equals(PRONUNCIATION_DOUSHI) ||
+                            node.get_pos().equals(PRONUNCIATION_JODOUSHI)) &&
                     node.get_mora_size() > 0)
                 node.next.set_pronunciation(PRONUNCIATION_CHOUON);
 
             if (node.next != null &&
-                    node.get_pos().equals(PRONUNCIATION_JODOUSHI) == true &&
-                    node.next.get_string().equals(PRONUNCIATION_QUESTION) == true)
-                if (node.get_string().equals(PRONUNCIATION_DESU_STR) == true)
+                    node.get_pos().equals(PRONUNCIATION_JODOUSHI) &&
+                    node.next.get_string().equals(PRONUNCIATION_QUESTION))
+                if (node.get_string().equals(PRONUNCIATION_DESU_STR))
                     node.set_pronunciation(PRONUNCIATION_DESU_PRON);
-                else if (node.get_string().equals(PRONUNCIATION_MASU_STR) == true)
+                else if (node.get_string().equals(PRONUNCIATION_MASU_STR))
                     node.set_pronunciation(PRONUNCIATION_MASU_PRON);
         }
     }

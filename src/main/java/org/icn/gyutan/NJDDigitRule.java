@@ -573,12 +573,12 @@ public class NJDDigitRule {
     }
 
     static int get_digit(NJDNode node, int convert_flag) {
-        if (node == null || node.get_string().equals("*") == true)
+        if (node == null || node.get_string().equals("*"))
             return -1;
         //node.fprint(System.err);
-        if (node.get_pos_group1().equals(DIGIT_KAZU) == true)
+        if (node.get_pos_group1().equals(DIGIT_KAZU))
             for (int i = 0; i < digit_rule_numeral_list1.length; i += 3)
-                if (digit_rule_numeral_list1[i].equals(node.get_string()) == true) {
+                if (digit_rule_numeral_list1[i].equals(node.get_string())) {
                     if (convert_flag == 1) {
                         node.set_string(digit_rule_numeral_list1[i + 2]);
                         node.set_orig(digit_rule_numeral_list1[i + 2]);
@@ -600,43 +600,55 @@ public class NJDDigitRule {
             buff_pos_group2 = start.prev.get_pos_group2();
             buff_string = start.prev.get_string();
 
-            if (buff_pos_group1.equals(DIGIT_SUUSETSUZOKU) == true)
+            if (buff_pos_group1.equals(DIGIT_SUUSETSUZOKU))
                 score += 2;
-            if (buff_pos_group2.equals(DIGIT_JOSUUSHI) == true ||
-                    buff_pos_group1.equals(DIGIT_FUKUSHIKANOU) == true)
+            if (buff_pos_group2.equals(DIGIT_JOSUUSHI) ||
+                    buff_pos_group1.equals(DIGIT_FUKUSHIKANOU))
                 score += 1;
 
             if (buff_string != null) {
-                if (buff_string.equals(DIGIT_TEN1) == true || buff_string.equals(DIGIT_TEN2) == true) {
-                    if (start.prev.prev == null || start.prev.prev.get_pos_group1().equals(DIGIT_KAZU) != true)
+                switch (buff_string) {
+                case DIGIT_TEN1:
+                case DIGIT_TEN2:
+                    if (start.prev.prev == null || !start.prev.prev.get_pos_group1().equals(DIGIT_KAZU))
                         score += 0;
                     else
                         score -= 5;
-                } else if (buff_string.equals(DIGIT_HAIHUN1) == true)
+                    break;
+                case DIGIT_HAIHUN1:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_HAIHUN2) == true)
+                    break;
+                case DIGIT_HAIHUN2:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_HAIHUN3) == true)
+                    break;
+                case DIGIT_HAIHUN3:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_HAIHUN4) == true)
+                    break;
+                case DIGIT_HAIHUN4:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_HAIHUN5) == true)
+                    break;
+                case DIGIT_HAIHUN5:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_KAKKO1) == true) {
-                    if (start.prev.prev == null || start.prev.prev.get_pos_group1().equals(DIGIT_KAZU) != true)
+                    break;
+                case DIGIT_KAKKO1:
+                    if (start.prev.prev == null || !start.prev.prev.get_pos_group1().equals(DIGIT_KAZU))
                         score += 0;
                     else
                         score -= 2;
-                } else if (buff_string.equals(DIGIT_KAKKO2) == true)
+                    break;
+                case DIGIT_KAKKO2:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_BANGOU) == true)
+                    break;
+                case DIGIT_BANGOU:
                     score -= 2;
+                    break;
+                }
 
             }
 
             if (start.prev.prev != null) {
                 buff_string = start.prev.prev.get_string();
-                if (buff_string.equals(DIGIT_BANGOU) == true)
+                if (buff_string.equals(DIGIT_BANGOU))
                     score -= 2;
             }
         }
@@ -646,33 +658,45 @@ public class NJDDigitRule {
             buff_pos_group2 = end.next.get_pos_group2();
             buff_string = end.next.get_string();
 
-            if (buff_pos_group2.equals(DIGIT_JOSUUSHI) == true ||
-                    buff_pos_group1.equals(DIGIT_FUKUSHIKANOU) == true)
+            if (buff_pos_group2.equals(DIGIT_JOSUUSHI) ||
+                    buff_pos_group1.equals(DIGIT_FUKUSHIKANOU))
                 score += 2;
             if (buff_string != null) {
-                if (buff_string.equals(DIGIT_HAIHUN1) == true)
+                switch (buff_string) {
+                case DIGIT_HAIHUN1:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_HAIHUN2) == true)
+                    break;
+                case DIGIT_HAIHUN2:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_HAIHUN3) == true)
+                    break;
+                case DIGIT_HAIHUN3:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_HAIHUN4) == true)
+                    break;
+                case DIGIT_HAIHUN4:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_HAIHUN5) == true)
+                    break;
+                case DIGIT_HAIHUN5:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_KAKKO1) == true)
+                    break;
+                case DIGIT_KAKKO1:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_KAKKO2) == true) {
-                    if (end.next.next == null || end.next.next.get_pos_group1().equals(DIGIT_KAZU) != true)
+                    break;
+                case DIGIT_KAKKO2:
+                    if (end.next.next == null || !end.next.next.get_pos_group1().equals(DIGIT_KAZU))
                         score += 0;
                     else
                         score -= 2;
-                } else if (buff_string.equals(DIGIT_BANGOU) == true)
+                    break;
+                case DIGIT_BANGOU:
                     score -= 2;
-                else if (buff_string.equals(DIGIT_TEN1) == true)
+                    break;
+                case DIGIT_TEN1:
                     score += 4;
-                else if (buff_string.equals(DIGIT_TEN2) == true)
+                    break;
+                case DIGIT_TEN2:
                     score += 4;
+                    break;
+                }
             }
 
         }
@@ -684,9 +708,9 @@ public class NJDDigitRule {
         int size = 0;
 
         if (start == null)
-            System.err.printf("start is null\n");
+            System.err.print("start is null\n");
         if (end == null)
-            System.err.printf("end is null\n");
+            System.err.print("end is null\n");
 
         //System.err.printf("++ convert digit sequence ++\n");
         for (NJDNode node = start; node != end.next; node = node.next) {
@@ -701,14 +725,14 @@ public class NJDDigitRule {
         if (get_digit_sequence_score(start, end) < 0) {
             size = 0;
             for (NJDNode node = start; node != end.next; node = node.next) {
-                if (node.get_string().equals(DIGIT_ZERO1) == true ||
-                        node.get_string().equals(DIGIT_ZERO2) == true) {
+                if (node.get_string().equals(DIGIT_ZERO1) ||
+                        node.get_string().equals(DIGIT_ZERO2)) {
                     node.set_pronunciation(DIGIT_ZERO_AFTER_DP);
                     node.set_mora_size(2);
-                } else if (node.get_string().equals(DIGIT_TWO) == true) {
+                } else if (node.get_string().equals(DIGIT_TWO)) {
                     node.set_pronunciation(DIGIT_TWO_AFTER_DP);
                     node.set_mora_size(2);
-                } else if (node.get_string().equals(DIGIT_FIVE) == true) {
+                } else if (node.get_string().equals(DIGIT_FIVE)) {
                     node.set_pronunciation(DIGIT_FIVE_AFTER_DP);
                     node.set_mora_size(2);
                 }
@@ -740,10 +764,10 @@ public class NJDDigitRule {
         int have = 0;
         for (NJDNode node = start; node != end.next; node = node.next) {
             int digit = get_digit(node, 0);
-            //System.err.printf("#### digit:%d, index:%d\n", digit, index);
-            //System.err.printf("## node ##\n");
-            //node.fprint(System.err);
-            //System.err.printf("## END ##\n");
+//            System.err.printf("#### digit:%d, index:%d\n", digit, index);
+//            System.err.printf("## node ##\n");
+//            node.fprint(System.err);
+//            System.err.printf("## END ##\n");
 
             if (index == 0) {
                 if (digit == 0) {
@@ -785,10 +809,10 @@ public class NJDDigitRule {
     static int search_numerative_class(String[] list, NJDNode node) {
         String str = node.get_string();
 
-        if (str.equals("*") == true)
+        if (str.equals("*"))
             return 0;
-        for (int i = 0; i < list.length; i++)
-            if (list[i].equals(str) == true)
+        for (String s : list)
+            if (s.equals(str))
                 return 1;
 
         return 0;
@@ -797,10 +821,10 @@ public class NJDDigitRule {
     static void convert_digit_pronunciation(String[] list, NJDNode node) {
         String str = node.get_string();
 
-        if (str.equals("*") == true)
+        if (str.equals("*"))
             return;
         for (int i = 0; i < list.length; i += 4) {
-            if (list[i].equals(str) == true) {
+            if (list[i].equals(str)) {
                 node.set_pronunciation(list[i + 1]);
                 node.set_accent(Integer.parseInt(list[i + 2]));
                 node.set_mora_size(Integer.parseInt(list[i + 3]));
@@ -814,11 +838,11 @@ public class NJDDigitRule {
 
         int type = 0;
 
-        if (str.equals("*") == true)
+        if (str.equals("*"))
             return;
 
         for (int i = 0; i < list.length; i += 2)
-            if (list[i].equals(str) == true) {
+            if (list[i].equals(str)) {
                 type = Integer.parseInt(list[i + 1]);
                 break;
             }
@@ -860,7 +884,7 @@ public class NJDDigitRule {
         NJDNode e = null;
 
         for (NJDNode node = njd.head; node != null; node = node.next) {
-            if (find == 0 && node.get_pos_group1().equals(DIGIT_KAZU) == true)
+            if (find == 0 && node.get_pos_group1().equals(DIGIT_KAZU))
                 find = 1;
             if (get_digit(node, 1) >= 0) {
                 if (s == null)
@@ -882,23 +906,23 @@ public class NJDDigitRule {
 
     static void set_digit_sub2(NJD njd) {
         for (NJDNode node = njd.head.next; node != null && node.next != null; node = node.next)
-            if (node.get_string().equals("*") != true &&
-                    node.prev.get_string().equals("*") != true &&
-                    (node.get_string().equals(DIGIT_TEN1) == true ||
-                            node.get_string().equals(DIGIT_TEN2) == true) &&
-                    node.prev.get_pos_group1().equals(DIGIT_KAZU) == true &&
-                    node.next.get_pos_group1().equals(DIGIT_KAZU) == true) {
+            if (!node.get_string().equals("*") &&
+                    !node.prev.get_string().equals("*") &&
+                    (node.get_string().equals(DIGIT_TEN1) ||
+                            node.get_string().equals(DIGIT_TEN2)) &&
+                    node.prev.get_pos_group1().equals(DIGIT_KAZU) &&
+                    node.next.get_pos_group1().equals(DIGIT_KAZU)) {
                 node.load(DIGIT_TEN_FEATURE);
                 node.set_chain_flag(1);
 
-                if (node.prev.get_string().equals(DIGIT_ZERO1) == true ||
-                        node.prev.get_string().equals(DIGIT_ZERO2) == true) {
+                if (node.prev.get_string().equals(DIGIT_ZERO1) ||
+                        node.prev.get_string().equals(DIGIT_ZERO2)) {
                     node.prev.set_pronunciation(DIGIT_ZERO_BEFORE_DP);
                     node.prev.set_mora_size(2);
-                } else if (node.prev.get_string().equals(DIGIT_TWO) == true) {
+                } else if (node.prev.get_string().equals(DIGIT_TWO)) {
                     node.prev.set_pronunciation(DIGIT_TWO_BEFORE_DP);
                     node.prev.set_mora_size(2);
-                } else if (node.prev.get_string().equals(DIGIT_FIVE) == true) {
+                } else if (node.prev.get_string().equals(DIGIT_FIVE)) {
                     node.prev.set_pronunciation(DIGIT_FIVE_BEFORE_DP);
                     node.prev.set_mora_size(2);
                 }
@@ -907,9 +931,9 @@ public class NJDDigitRule {
 
     static void set_digit_sub3(NJD njd) {
         for (NJDNode node = njd.head.next; node != null; node = node.next) {
-            if (node.prev.get_pos_group1().equals(DIGIT_KAZU) == true) {
-                if (node.get_pos_group2().equals(DIGIT_JOSUUSHI) == true ||
-                        node.get_pos_group1().equals(DIGIT_FUKUSHIKANOU) == true) {
+            if (node.prev.get_pos_group1().equals(DIGIT_KAZU)) {
+                if (node.get_pos_group2().equals(DIGIT_JOSUUSHI) ||
+                        node.get_pos_group1().equals(DIGIT_FUKUSHIKANOU)) {
                     /* convert digit pron */
                     if (search_numerative_class(digit_rule_numerative_class1b, node) == 1)
                         convert_digit_pronunciation(digit_rule_conv_table1b, node.prev);
@@ -958,16 +982,16 @@ public class NJDDigitRule {
         int find = 0;
 
         for (NJDNode node = njd.head.next; node != null; node = node.next) {
-            if (node.prev.get_pos_group1().equals(DIGIT_KAZU) == true) {
-                if (node.get_pos_group1().equals(DIGIT_KAZU) == true &&
+            if (node.prev.get_pos_group1().equals(DIGIT_KAZU)) {
+                if (node.get_pos_group1().equals(DIGIT_KAZU) &&
                         node.prev.get_string() != null &&
                         node.get_string() != null) {
                     /* modify accent phrase */
                     find = 0;
-                    for (int i = 0; i < digit_rule_numeral_list4.length; i++) {
-                        if (node.prev.get_string().equals(digit_rule_numeral_list4[i]) == true) {
-                            for (int j = 0; j < digit_rule_numeral_list5.length; j++) {
-                                if (node.get_string().equals(digit_rule_numeral_list5[j]) == true) {
+                    for (String item : digit_rule_numeral_list4) {
+                        if (node.prev.get_string().equals(item)) {
+                            for (String s : digit_rule_numeral_list5) {
+                                if (node.get_string().equals(s)) {
                                     node.prev.set_chain_flag(0);
                                     node.set_chain_flag(1);
                                     find = 1;
@@ -978,10 +1002,10 @@ public class NJDDigitRule {
                         }
                     }
                     if (find == 0) {
-                        for (int i = 0; i < digit_rule_numeral_list5.length; i++) {
-                            if (node.prev.get_string().equals(digit_rule_numeral_list5[i]) == true) {
-                                for (int j = 0; j < digit_rule_numeral_list4.length; j++) {
-                                    if (node.get_string().equals(digit_rule_numeral_list4[j]) == true) {
+                        for (String value : digit_rule_numeral_list5) {
+                            if (node.prev.get_string().equals(value)) {
+                                for (String s : digit_rule_numeral_list4) {
+                                    if (node.get_string().equals(s)) {
                                         node.set_chain_flag(0);
                                         break;
                                     }
@@ -1004,18 +1028,18 @@ public class NJDDigitRule {
     static void set_digit_sub5(NJD njd) {
         for (NJDNode node = njd.head; node != null; node = node.next) {
             if (node.next != null &&
-                    node.next.get_string().equals("*") != true &&
-                    node.get_pos_group1().equals(DIGIT_KAZU) == true &&
+                    !node.next.get_string().equals("*") &&
+                    node.get_pos_group1().equals(DIGIT_KAZU) &&
                     (node.prev == null ||
-                            node.prev.get_pos_group1().equals(DIGIT_KAZU) != true) &&
-                    (node.next.get_pos_group2().equals(DIGIT_JOSUUSHI) == true ||
-                            node.next.get_pos_group1().equals(DIGIT_FUKUSHIKANOU) == true)) {
+                            !node.prev.get_pos_group1().equals(DIGIT_KAZU)) &&
+                    (node.next.get_pos_group2().equals(DIGIT_JOSUUSHI) ||
+                            node.next.get_pos_group1().equals(DIGIT_FUKUSHIKANOU))) {
                 /* convert class3 */
                 for (int i = 0; i < digit_rule_numerative_class3.length; i += 2) {
-                    if (node.next.get_string().equals(digit_rule_numerative_class3[i]) == true &&
-                            node.next.get_read().equals(digit_rule_numerative_class3[i + 1]) == true) {
+                    if (node.next.get_string().equals(digit_rule_numerative_class3[i]) &&
+                            node.next.get_read().equals(digit_rule_numerative_class3[i + 1])) {
                         for (int j = 0; j < digit_rule_conv_table3.length; j += 4) {
-                            if (node.get_string().equals(digit_rule_conv_table3[j]) == true) {
+                            if (node.get_string().equals(digit_rule_conv_table3[j])) {
                                 node.set_read(digit_rule_conv_table3[j + 1]);
                                 node.set_pronunciation(digit_rule_conv_table3[j + 1]);
                                 node.set_accent(Integer.parseInt(digit_rule_conv_table3[j + 2]));
@@ -1027,9 +1051,9 @@ public class NJDDigitRule {
                     }
                 }
                 /* person */
-                if (node.next.get_string().equals(DIGIT_NIN) == true) {
+                if (node.next.get_string().equals(DIGIT_NIN)) {
                     for (int i = 0; i < digit_rule_conv_table4.length; i += 2) {
-                        if (node.get_string().equals(digit_rule_conv_table4[i]) == true) {
+                        if (node.get_string().equals(digit_rule_conv_table4[i])) {
                             node.load(digit_rule_conv_table4[i + 1]);
                             node.next.set_pronunciation(null);
                             break;
@@ -1037,25 +1061,25 @@ public class NJDDigitRule {
                     }
                 }
                 /* the day of month */
-                if (node.next.get_string().equals(DIGIT_NICHI) == true &&
-                        node.get_string().equals("*") != true) {
+                if (node.next.get_string().equals(DIGIT_NICHI) &&
+                        !node.get_string().equals("*")) {
                     if (node.prev != null &&
-                            node.prev.get_string().indexOf(DIGIT_GATSU) != -1 &&
-                            node.get_string().equals(DIGIT_ONE) == true) {
+                            node.prev.get_string().contains(DIGIT_GATSU) &&
+                            node.get_string().equals(DIGIT_ONE)) {
                         node.load(DIGIT_TSUITACHI);
                         node.next.set_pronunciation(null);
                     } else {
                         for (int i = 0; i < digit_rule_conv_table5.length; i += 2) {
-                            if (node.get_string().equals(digit_rule_conv_table5[i]) == true) {
+                            if (node.get_string().equals(digit_rule_conv_table5[i])) {
                                 node.load(digit_rule_conv_table5[i + 1]);
                                 node.next.set_pronunciation(null);
                                 break;
                             }
                         }
                     }
-                } else if (node.next.get_string().equals(DIGIT_NICHIKAN) == true) {
+                } else if (node.next.get_string().equals(DIGIT_NICHIKAN)) {
                     for (int i = 0; i < digit_rule_conv_table6.length; i += 2) {
-                        if (node.get_string().equals(digit_rule_conv_table6[i]) == true) {
+                        if (node.get_string().equals(digit_rule_conv_table6[i])) {
                             node.load(digit_rule_conv_table6[i + 1]);
                             node.next.set_pronunciation(null);
                             break;
@@ -1069,37 +1093,37 @@ public class NJDDigitRule {
     static void set_digit_sub6(NJD njd) {
         for (NJDNode node = njd.head; node != null; node = node.next) {
             if ((node.prev == null ||
-                    node.prev.get_pos_group1().equals(DIGIT_KAZU) != true) &&
+                    !node.prev.get_pos_group1().equals(DIGIT_KAZU)) &&
                     node.next != null && node.next.next != null) {
-                if (node.get_string().equals(DIGIT_TEN) == true &&
-                        node.next.get_string().equals(DIGIT_FOUR) == true) {
-                    if (node.next.next.get_string().equals(DIGIT_NICHI) == true) {
+                if (node.get_string().equals(DIGIT_TEN) &&
+                        node.next.get_string().equals(DIGIT_FOUR)) {
+                    if (node.next.next.get_string().equals(DIGIT_NICHI)) {
                         node.load(DIGIT_JUYOKKA);
                         node.next.set_pronunciation(null);
                         node.next.next.set_pronunciation(null);
-                    } else if (node.next.next.get_string().equals(DIGIT_NICHIKAN) == true) {
+                    } else if (node.next.next.get_string().equals(DIGIT_NICHIKAN)) {
                         node.load(DIGIT_JUYOKKAKAN);
                         node.next.set_pronunciation(null);
                         node.next.next.set_pronunciation(null);
                     }
-                } else if (node.get_string().equals(DIGIT_TWO) == true &&
-                        node.next.get_string().equals(DIGIT_TEN) == true) {
-                    if (node.next.next.get_string().equals(DIGIT_NICHI) == true) {
+                } else if (node.get_string().equals(DIGIT_TWO) &&
+                        node.next.get_string().equals(DIGIT_TEN)) {
+                    if (node.next.next.get_string().equals(DIGIT_NICHI)) {
                         node.load(DITIT_HATSUKA);
                         node.next.set_pronunciation(null);
                         node.next.next.set_pronunciation(null);
-                    } else if (node.next.next.get_string().equals(DIGIT_NICHIKAN) == true) {
+                    } else if (node.next.next.get_string().equals(DIGIT_NICHIKAN)) {
                         node.load(DIGIT_HATSUKAKAN);
                         node.next.set_pronunciation(null);
                         node.next.next.set_pronunciation(null);
-                    } else if (node.next.next.get_string().equals(DIGIT_FOUR) == true &&
+                    } else if (node.next.next.get_string().equals(DIGIT_FOUR) &&
                             node.next.next.next != null) {
-                        if (node.next.next.next.get_string().equals(DIGIT_NICHI) == true) {
+                        if (node.next.next.next.get_string().equals(DIGIT_NICHI)) {
                             node.load(DIGIT_NIJU);
                             node.next.load(DITIT_YOKKA);
                             node.next.next.set_pronunciation(null);
                             node.next.next.next.set_pronunciation(null);
-                        } else if (node.next.next.next.get_string().equals(DIGIT_NICHIKAN) == true) {
+                        } else if (node.next.next.next.get_string().equals(DIGIT_NICHIKAN)) {
                             node.load(DIGIT_NIJU);
                             node.next.load(DIGIT_YOKKAKAN);
                             node.next.set_pronunciation(null);
@@ -1121,28 +1145,28 @@ public class NJDDigitRule {
         if (njd.head == null)
             return;
 
-        //System.err.printf("++ after digit sub1 ++\n");
-        //njd.fprint(System.err);
+//        System.err.printf("++ after digit sub1 ++\n");
+//        njd.fprint(System.err);
 
         set_digit_sub2(njd);
-        //System.err.printf("++ after digit sub2 ++\n");
-        //njd.fprint(System.err);
+//        System.err.printf("++ after digit sub2 ++\n");
+//        njd.fprint(System.err);
 
         set_digit_sub3(njd);
-        //System.err.printf("++ after digit sub3 ++\n");
-        //njd.fprint(System.err);
+//        System.err.printf("++ after digit sub3 ++\n");
+//        njd.fprint(System.err);
 
         set_digit_sub4(njd);
-        //System.err.printf("++ after digit sub4 ++\n");
-        //njd.fprint(System.err);
+//        System.err.printf("++ after digit sub4 ++\n");
+//        njd.fprint(System.err);
 
         set_digit_sub5(njd);
-        //System.err.printf("++ after digit sub5 ++\n");
-        //njd.fprint(System.err);
+//        System.err.printf("++ after digit sub5 ++\n");
+//        njd.fprint(System.err);
 
         set_digit_sub6(njd);
-        //System.err.printf("++ after digit sub6 ++\n");
-        //njd.fprint(System.err);
+//        System.err.printf("++ after digit sub6 ++\n");
+//        njd.fprint(System.err);
 
         njd.remove_silent_node();
         if (njd.head == null)

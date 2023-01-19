@@ -209,9 +209,9 @@ public class JPCommon {
 
     JPCommon(NJD njd) {
         initialize();
-        //System.err.printf("=== JPCommon ===\n");
+//        System.err.printf("=== JPCommon ===\n");
         for (NJDNode inode = njd.head; inode != null; inode = inode.next) {
-            //inode.print();
+//            inode.print();
             JPCommonNode jnode = new JPCommonNode();
             jnode.set_pronunciation(inode.get_pronunciation());
 
@@ -228,7 +228,7 @@ public class JPCommon {
             jnode.set_chain_flag(inode.get_chain_flag());
             push(jnode);
         }
-        //System.err.printf("=== END ===\n");
+//        System.err.printf("=== END ===\n");
     }
 
     void initialize() {
@@ -250,7 +250,7 @@ public class JPCommon {
     void make_label() {
         label = new JPCommonLabel();
         for (JPCommonNode node = head; node != null; node = node.next) {
-            //node.print();
+//            node.print();
             label.push_word(node.get_pronunciation(),
                     node.get_pos(),
                     node.get_ctype(),
@@ -291,12 +291,13 @@ public class JPCommon {
     //
     // njd2jpcommon.c
     //
+
     String convert_pos(String pos, String pos_group1, String pos_group2, String pos_group3) {
         for (int i = 0; i < jpcommon_pos_list.length; i += 5) {
-            if (jpcommon_pos_list[i].equals(pos) == true &&
-                    jpcommon_pos_list[i + 1].equals(pos_group1) == true &&
-                    jpcommon_pos_list[i + 2].equals(pos_group2) == true &&
-                    jpcommon_pos_list[i + 3].equals(pos_group3) == true)
+            if (jpcommon_pos_list[i].equals(pos) &&
+                    jpcommon_pos_list[i + 1].equals(pos_group1) &&
+                    jpcommon_pos_list[i + 2].equals(pos_group2) &&
+                    jpcommon_pos_list[i + 3].equals(pos_group3))
                 return jpcommon_pos_list[i + 4];
         }
 
@@ -308,7 +309,7 @@ public class JPCommon {
 
     String convert_ctype(String ctype) {
         for (int i = 0; i < jpcommon_ctype_list.length; i += 2) {
-            if (jpcommon_ctype_list[i].equals(ctype) == true)
+            if (jpcommon_ctype_list[i].equals(ctype))
                 return jpcommon_ctype_list[i + 1];
         }
 
@@ -318,7 +319,7 @@ public class JPCommon {
 
     String convert_cform(String cform) {
         for (int i = 0; i < jpcommon_cform_list.length; i += 2) {
-            if (jpcommon_cform_list[i].equals(cform) == true)
+            if (jpcommon_cform_list[i].equals(cform))
                 return jpcommon_cform_list[i + 1];
         }
 

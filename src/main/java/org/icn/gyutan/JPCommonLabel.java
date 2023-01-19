@@ -50,7 +50,7 @@ public class JPCommonLabel {
     static final String PHONEME_UNKNOWN = "xx";
     static final String FLAG_QUESTION = "1";
 
-    static final String mora_list[] = {
+    static final String[] mora_list = {
             "ヴョ", "by", "o",
             "ヴュ", "by", "u",
             "ヴャ", "by", "a",
@@ -229,7 +229,7 @@ public class JPCommonLabel {
     JPCommonLabelMora mora_tail;
     JPCommonLabelPhoneme phoneme_head;
     JPCommonLabelPhoneme phoneme_tail;
-    Boolean short_pause_flag;
+    boolean short_pause_flag;
 
     JPCommonLabel() {
         initialize();
@@ -252,15 +252,15 @@ public class JPCommonLabel {
     void insert_pause() {
         if (short_pause_flag) {
             if (phoneme_tail != null) {
-                if (phoneme_tail.phoneme.equals(PHONEME_SHORT_PAUSE) == true) {
-                    System.err.printf("WARNING: JPCommonLabel.insert_word(): short pause should not be chained\n");
+                if (phoneme_tail.phoneme.equals(PHONEME_SHORT_PAUSE)) {
+                    System.err.print("WARNING: JPCommonLabel.insert_word(): short pause should not be chained\n");
                     return;
                 }
                 phoneme_tail.next = new JPCommonLabelPhoneme();
                 phoneme_tail.next.initialize(PHONEME_SHORT_PAUSE, phoneme_tail, null, null);
                 phoneme_tail = phoneme_tail.next;
             } else {
-                System.err.printf("WARNING: JPCommonLabel.insert_word(): First mora should not be short pause.\n");
+                System.err.print("WARNING: JPCommonLabel.insert_word(): First mora should not be short pause.\n");
             }
             short_pause_flag = false;
         }
@@ -291,7 +291,7 @@ public class JPCommonLabel {
 
     void set_emotion_flag() {
         if (phoneme_tail != null) {
-            if (phoneme_tail.phoneme.equals(PHONEME_SHORT_PAUSE) == true) {
+            if (phoneme_tail.phoneme.equals(PHONEME_SHORT_PAUSE)) {
                 if (phoneme_tail.prev.up.up.up.emotion == null)
                     phoneme_tail.prev.up.up.up.emotion = FLAG_QUESTION;
             } else {
@@ -299,7 +299,7 @@ public class JPCommonLabel {
                     phoneme_tail.up.up.up.emotion = FLAG_QUESTION;
             }
         } else {
-            System.err.printf("WARNING* JPCommonLabel.push_word(): First mora should not be question flag.\n");
+            System.err.print("WARNING* JPCommonLabel.push_word(): First mora should not be question flag.\n");
         }
 
         short_pause_flag = true;
@@ -314,7 +314,7 @@ public class JPCommonLabel {
 
             int find = strtopcmp(pron, MORA_LONG_VOWEL);
             if (find != -1) {
-                if (phoneme_tail != null && short_pause_flag == false) {
+                if (phoneme_tail != null && !short_pause_flag) {
                     //System.err.printf("++ proc1 ++\n");
                     insert_pause();
                     phoneme_tail.next = new JPCommonLabelPhoneme();
@@ -327,7 +327,7 @@ public class JPCommonLabel {
                     mora_tail = mora_tail.next;
                     word_tail.tail = mora_tail;
                 } else {
-                    System.err.printf("WARNING: JPCommonLabel.push_word(): First mora should not be long vowel symbol.\n");
+                    System.err.print("WARNING: JPCommonLabel.push_word(): First mora should not be long vowel symbol.\n");
                 }
                 pron = pron.substring(find);
             } else {
@@ -338,7 +338,7 @@ public class JPCommonLabel {
                     if (phoneme_tail != null && is_first_word != 1)
                         phoneme_tail.convert_unvoice();
                     else
-                        System.err.printf("WARNING: JPCommonLabel.push_word(): First mora should not be unvoice flag.\n");
+                        System.err.print("WARNING: JPCommonLabel.push_word(): First mora should not be unvoice flag.\n");
                     pron = pron.substring(find);
                 } else {
                     //System.err.printf("++ proc3 ++\n");
@@ -422,7 +422,7 @@ public class JPCommonLabel {
             word_tail.up = accent_tail;
             accent_tail.tail = word_tail;
         } else {
-            if (PHONEME_SHORT_PAUSE.equals(word_tail.prev.tail.tail.next.phoneme) != true) {
+            if (!PHONEME_SHORT_PAUSE.equals(word_tail.prev.tail.tail.next.phoneme)) {
                 accent_tail.next = new JPCommonLabelAccentPhrase();
                 word_tail.up = accent_tail.next;
                 accent_tail.next.initialize(accent, null, word_tail, word_tail, accent_tail, null, breath_tail);
@@ -443,12 +443,12 @@ public class JPCommonLabel {
     void push_word(String pron, String pos, String ctype, String cform, int accent, int chain_flag) {
         int is_first_word = 1;
 
-        if (MORA_SHORT_PAUSE.equals(pron) == true) {
+        if (MORA_SHORT_PAUSE.equals(pron)) {
             short_pause_flag = true;
             return;
         }
 
-        if (MORA_QUESTION.equals(pron) == true) {
+        if (MORA_QUESTION.equals(pron)) {
             set_emotion_flag();
             return;
         }
@@ -457,7 +457,7 @@ public class JPCommonLabel {
             return;
         if (phoneme_tail == null)
             return;
-        if (phoneme_tail.phoneme.equals(PHONEME_SHORT_PAUSE) == true)
+        if (phoneme_tail.phoneme.equals(PHONEME_SHORT_PAUSE))
             return;
 
         make_accent_and_phrase(accent, chain_flag);
@@ -468,10 +468,10 @@ public class JPCommonLabel {
                 phoneme_list[i + 2], phoneme_list[i + 3], phoneme_list[i + 4]));
     }
 
-    void make_A(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p, String[] phoneme_list) {
+    void make_A(int i, boolean short_pause_flag, JPCommonLabelPhoneme p, String[] phoneme_list) {
         String buff;
 
-        if (i == 0 || i == size - 1 || short_pause_flag == true)
+        if (i == 0 || i == size - 1 || short_pause_flag)
             buff = "/A:xx+xx+xx";
         else {
             int tmp1 = p.up.index_mora_in_accent_phrase();
@@ -484,7 +484,7 @@ public class JPCommonLabel {
         lineBuffer.append(buff);
     }
 
-    void make_B(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_B(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
         JPCommonLabelWord w = null;
 
@@ -505,10 +505,10 @@ public class JPCommonLabel {
         lineBuffer.append(buff);
     }
 
-    void make_C(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_C(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
 
-        if (i == 0 || i == size - 1 || short_pause_flag == true)
+        if (i == 0 || i == size - 1 || short_pause_flag)
             buff = "/C:xx_xx+xx";
         else
             buff = String.format("/C:%s_%s+%s", p.up.up.pos, p.up.up.ctype, p.up.up.cform);
@@ -516,11 +516,11 @@ public class JPCommonLabel {
         lineBuffer.append(buff);
     }
 
-    void make_D(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_D(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
         JPCommonLabelWord w = null;
 
-        if (short_pause_flag == true)
+        if (short_pause_flag)
             w = p.next.up.up;
         else if (p.up.up.next == null)
             w = null;
@@ -537,11 +537,11 @@ public class JPCommonLabel {
         lineBuffer.append(buff);
     }
 
-    void make_E(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_E(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
         JPCommonLabelAccentPhrase a = null;
 
-        if (short_pause_flag == true)
+        if (short_pause_flag)
             a = p.prev.up.up.up;
         else if (i == size - 1)
             a = p.up.up.up;
@@ -556,17 +556,17 @@ public class JPCommonLabel {
                     a.emotion == null ? "0" : a.emotion);
         lineBuffer.append(buff);
 
-        if (i == 0 || i == size - 1 || short_pause_flag == true || a == null)
+        if (i == 0 || i == size - 1 || short_pause_flag || a == null)
             lineBuffer.append("-xx");
         else
-            lineBuffer.append(String.format("-%d", a.tail.tail.tail.next.phoneme.equals(PHONEME_SHORT_PAUSE) == true ? 0 : 1));
+            lineBuffer.append(String.format("-%d", a.tail.tail.tail.next.phoneme.equals(PHONEME_SHORT_PAUSE) ? 0 : 1));
     }
 
-    void make_F(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_F(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
         JPCommonLabelAccentPhrase a = null;
 
-        if (i == 0 || i == size - 1 || short_pause_flag == true)
+        if (i == 0 || i == size - 1 || short_pause_flag)
             a = null;
         else
             a = p.up.up.up;
@@ -590,11 +590,11 @@ public class JPCommonLabel {
         lineBuffer.append(buff);
     }
 
-    void make_G(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_G(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
         JPCommonLabelAccentPhrase a = null;
 
-        if (short_pause_flag == true)
+        if (short_pause_flag)
             a = p.next.up.up.up;
         else if (i == 0)
             a = p.up.up.up;
@@ -611,20 +611,20 @@ public class JPCommonLabel {
             );
         lineBuffer.append(buff);
 
-        if (i == 0 || i == size - 1 || short_pause_flag == true || a == null)
+        if (i == 0 || i == size - 1 || short_pause_flag || a == null)
             buff = "_xx";
         else
             buff = String.format("_%d",
-                    PHONEME_SHORT_PAUSE.equals(a.head.head.head.prev.phoneme) == true ? 0 : 1);
+                    PHONEME_SHORT_PAUSE.equals(a.head.head.head.prev.phoneme) ? 0 : 1);
 
         lineBuffer.append(buff);
     }
 
-    void make_H(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_H(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
         JPCommonLabelBreathGroup b = null;
 
-        if (short_pause_flag == true)
+        if (short_pause_flag)
             b = p.prev.up.up.up.up;
         else if (i == size - 1)
             b = p.up.up.up.up;
@@ -642,11 +642,11 @@ public class JPCommonLabel {
         lineBuffer.append(buff);
     }
 
-    void make_I(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_I(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
         JPCommonLabelBreathGroup b = null;
 
-        if (i == 0 || i == size - 1 || short_pause_flag == true)
+        if (i == 0 || i == size - 1 || short_pause_flag)
             b = null;
         else
             b = p.up.up.up.up;
@@ -674,11 +674,11 @@ public class JPCommonLabel {
     }
 
 
-    void make_J(int i, Boolean short_pause_flag, JPCommonLabelPhoneme p) {
+    void make_J(int i, boolean short_pause_flag, JPCommonLabelPhoneme p) {
         String buff;
         JPCommonLabelBreathGroup b = null;
 
-        if (short_pause_flag == true)
+        if (short_pause_flag)
             b = p.next.up.up.up.up;
         else if (i == 0)
             b = p.up.up.up.up;
@@ -709,7 +709,7 @@ public class JPCommonLabel {
         for (JPCommonLabelPhoneme p = phoneme_head; p != null; p = p.next)
             size++;
         if (size < 1) {
-            System.err.printf("WARNING: JPCommonLabel.make(): No phoneme.\n");
+            System.err.print("WARNING: JPCommonLabel.make(): No phoneme.\n");
             return;
         }
 
@@ -730,12 +730,9 @@ public class JPCommonLabel {
 
 
         JPCommonLabelPhoneme p = phoneme_head;
-        Boolean short_pause_flag = false;
+        boolean short_pause_flag = false;
         for (i = 0; i < size; i++) {
-            if (p.phoneme.equals(PHONEME_SHORT_PAUSE) == true)
-                short_pause_flag = true;
-            else
-                short_pause_flag = false;
+            short_pause_flag = p.phoneme.equals(PHONEME_SHORT_PAUSE);
 
             make_phoneme(i, phoneme_list);
             make_A(i, short_pause_flag, p, phoneme_list);
@@ -799,8 +796,7 @@ public class JPCommonLabel {
 
     void save_label(FileOutputStream fos) {
         PrintStream ps = new PrintStream(fos);
-        for (int i = 0; i < feature.length; i++)
-            ps.println(feature[i]);
+        for (String s : feature) ps.println(s);
         ps.close();
     }
 }

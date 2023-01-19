@@ -46,9 +46,9 @@ public class NJD {
 
     NJD(String[] feature) {
         initialize();
-        for (int i = 0; i < feature.length; i++) {
+        for (String s : feature) {
             NJDNode node = new NJDNode();
-            node.load(feature[i]);
+            node.load(s);
             push_node(node);
         }
     }
@@ -316,7 +316,7 @@ public class NJD {
 
     void remove_silent_node() {
         for (NJDNode node = head; node != null; )
-            if (node.get_pronunciation().equals("*") == true)
+            if (node.get_pronunciation().equals("*"))
                 node = remove_node(node);
             else
                 node = node.next;

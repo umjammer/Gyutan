@@ -30,8 +30,9 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 public class Gyutan {
@@ -40,49 +41,49 @@ public class Gyutan {
 
     public static void usage() {
         System.err.printf("%s - The Japanese TTS system %s\n", progname, version);
-        System.err.printf("\n");
-        System.err.printf("  usage:\n");
+        System.err.print("\n");
+        System.err.print("  usage:\n");
         System.err.printf("       %s [ options ] [ infile ] \n", progname);
-        System.err.printf(
+        System.err.print(
                 "  options:                                                                   [  def][ min-- max]\n");
-        System.err.printf(
+        System.err.print(
                 "    -x  dir        : dictionary directory                                    [  N/A]\n");
-        System.err.printf(
+        System.err.print(
                 "    -m  htsvoice   : HTS voice files                                         [  N/A]\n");
-        System.err.printf(
+        System.err.print(
                 "    -ow s          : filename of output wav audio (generated speech)         [  N/A]\n");
-        System.err.printf(
+        System.err.print(
                 "    -ot s          : filename of output trace information                    [  N/A]\n");
-        System.err.printf(
+        System.err.print(
                 "    -ol s		   : filename of output label without time                   [  N/A]\n");
-        System.err.printf(
+        System.err.print(
                 "    -of            : filename of output label with time                      [  N/A]\n");
-        System.err.printf(
+        System.err.print(
                 "    -s  i          : sampling frequency                                      [ auto][   1--    ]\n");
-        System.err.printf(
+        System.err.print(
                 "    -p  i          : frame period (point)                                    [ auto][   1--    ]\n");
-        System.err.printf(
+        System.err.print(
                 "    -a  f          : all-pass constant                                       [ auto][ 0.0-- 1.0]\n");
-        System.err.printf(
+        System.err.print(
                 "    -b  f          : postfiltering coefficient                               [  0.0][ 0.0-- 1.0]\n");
-        System.err.printf(
+        System.err.print(
                 "    -r  f          : speech speed rate                                       [  1.0][ 0.0--    ]\n");
-        System.err.printf(
+        System.err.print(
                 "    -fm f          : additional half-tone                                    [  0.0][    --    ]\n");
-        System.err.printf(
+        System.err.print(
                 "    -u  f          : voiced/unvoiced threshold                               [  0.5][ 0.0-- 1.0]\n");
-        System.err.printf(
+        System.err.print(
                 "    -jm f          : weight of GV for spectrum                               [  1.0][ 0.0--    ]\n");
-        System.err.printf(
+        System.err.print(
                 "    -jf f          : weight of GV for log F0                                 [  1.0][ 0.0--    ]\n");
-        System.err.printf(
+        System.err.print(
                 "    -g  f          : volume (dB)                                             [  0.0][    --    ]\n");
-        System.err.printf(
+        System.err.print(
                 "    -z  i          : audio buffer size (if i==0, turn off)                   [    0][   0--    ]\n");
-        System.err.printf("  infile:\n");
-        System.err.printf(
+        System.err.print("  infile:\n");
+        System.err.print(
                 "    text file                                                                [stdin]\n");
-        System.err.printf("\n");
+        System.err.print("\n");
 
         System.exit(0);
     }
@@ -93,7 +94,7 @@ public class Gyutan {
 
         String dn_dict = null;
         String fn_voice = null;
-        Boolean use_audio = false;
+        boolean use_audio = false;
 
         if (args.length == 0)
             usage();
@@ -105,7 +106,7 @@ public class Gyutan {
                 usage();
         }
         if (dn_dict == null) {
-            System.err.printf("Error: Dictionary must be specified.\n");
+            System.err.print("Error: Dictionary must be specified.\n");
             System.exit(1);
         }
 
@@ -120,8 +121,8 @@ public class Gyutan {
 
 
         org.icn.gyutan.Gyutan gyutan = new org.icn.gyutan.Gyutan();
-        Boolean flag = gyutan.initialize(dn_dict, fn_voice);
-        if (flag == false) {
+        boolean flag = gyutan.initialize(dn_dict, fn_voice);
+        if (!flag) {
             System.err.println("Error: initialize failed");
             usage();
         }
@@ -178,7 +179,7 @@ public class Gyutan {
                     System.exit(1);
                 } else {
                     txtfn = args[cnt];
-                    txtfp = new BufferedInputStream(new FileInputStream(txtfn));
+                    txtfp = new BufferedInputStream(Files.newInputStream(Paths.get(txtfn)));
                 }
                 cnt++;
             }

@@ -93,7 +93,7 @@ public class NJDAccentTypeRule {
         if (input_rule != null) {
             while (c != (char) -1) {
                 c = get_token_from_string(input_rule, index, buff);
-                if ((c == '%' && prev_pos.indexOf(buff.toString()) != -1) ||
+                if ((c == '%' && prev_pos.contains(buff.toString())) ||
                         c == '@' || c == '/' || c == (char) -1) {
                     if (c == '%')
                         c = get_token_from_string(input_rule, index, buff);
@@ -180,74 +180,74 @@ public class NJDAccentTypeRule {
 
     static void change_accent_type_for_digit(NJDNode node) {
         if (node.prev != null && node.get_chain_flag() == 1 &&
-                node.prev.get_pos_group1().equals(ACCENT_TYPE_KAZU) == true &&
-                node.get_pos_group1().equals(ACCENT_TYPE_KAZU) == true) {
-            if (node.get_string().equals(ACCENT_TYPE_JYUU) == true) {
+                node.prev.get_pos_group1().equals(ACCENT_TYPE_KAZU) &&
+                node.get_pos_group1().equals(ACCENT_TYPE_KAZU)) {
+            if (node.get_string().equals(ACCENT_TYPE_JYUU)) {
 
                 if (node.prev.get_string() != null &&
-                        (node.prev.get_string().equals(ACCENT_TYPE_SAN) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_YON) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_KYUU) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_NAN) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_SUU) == true)) {
+                        (node.prev.get_string().equals(ACCENT_TYPE_SAN) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_YON) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_KYUU) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_NAN) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_SUU))) {
                     node.prev.set_accent(1);
                 } else {
                     node.prev.set_accent(1);
                 }
 
                 if (node.prev.get_string() != null &&
-                        (node.prev.get_string().equals(ACCENT_TYPE_GO) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_ROKU) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_HACHI) == true)) {
+                        (node.prev.get_string().equals(ACCENT_TYPE_GO) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_ROKU) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_HACHI))) {
 
                     if (node.next != null && node.next.get_string() != null &&
-                            (node.next.get_string().equals(ACCENT_TYPE_ICHI) == true ||
-                                    node.next.get_string().equals(ACCENT_TYPE_NI) == true ||
-                                    node.next.get_string().equals(ACCENT_TYPE_SAN) == true ||
-                                    node.next.get_string().equals(ACCENT_TYPE_YON) == true ||
-                                    node.next.get_string().equals(ACCENT_TYPE_GO) == true ||
-                                    node.next.get_string().equals(ACCENT_TYPE_ROKU) == true ||
-                                    node.next.get_string().equals(ACCENT_TYPE_NANA) == true ||
-                                    node.next.get_string().equals(ACCENT_TYPE_HACHI) == true ||
-                                    node.next.get_string().equals(ACCENT_TYPE_KYUU) == true))
+                            (node.next.get_string().equals(ACCENT_TYPE_ICHI) ||
+                                    node.next.get_string().equals(ACCENT_TYPE_NI) ||
+                                    node.next.get_string().equals(ACCENT_TYPE_SAN) ||
+                                    node.next.get_string().equals(ACCENT_TYPE_YON) ||
+                                    node.next.get_string().equals(ACCENT_TYPE_GO) ||
+                                    node.next.get_string().equals(ACCENT_TYPE_ROKU) ||
+                                    node.next.get_string().equals(ACCENT_TYPE_NANA) ||
+                                    node.next.get_string().equals(ACCENT_TYPE_HACHI) ||
+                                    node.next.get_string().equals(ACCENT_TYPE_KYUU)))
                         node.prev.set_accent(0);
                 }
-            } else if (node.get_string().equals(ACCENT_TYPE_HYAKU) == true) {
-                if (node.prev.get_string() != null && node.prev.get_string().equals(ACCENT_TYPE_NANA) == true)
+            } else if (node.get_string().equals(ACCENT_TYPE_HYAKU)) {
+                if (node.prev.get_string() != null && node.prev.get_string().equals(ACCENT_TYPE_NANA))
                     node.prev.set_accent(2);
                 else if (node.prev.get_string() != null &&
-                        (node.prev.get_string().equals(ACCENT_TYPE_SAN) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_YON) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_KYUU) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_NAN) == true))
+                        (node.prev.get_string().equals(ACCENT_TYPE_SAN) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_YON) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_KYUU) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_NAN)))
                     node.prev.set_accent(1);
                 else
                     node.prev.set_accent(node.prev.get_mora_size() + node.get_mora_size());
-            } else if (node.get_string().equals(ACCENT_TYPE_SEN) == true ||
-                    node.get_string().equals(ACCENT_TYPE_MAN) == true)
+            } else if (node.get_string().equals(ACCENT_TYPE_SEN) ||
+                    node.get_string().equals(ACCENT_TYPE_MAN))
                 node.prev.set_accent(node.prev.get_mora_size() + 1);
-            else if (node.get_string().equals(ACCENT_TYPE_OKU) == true)
+            else if (node.get_string().equals(ACCENT_TYPE_OKU))
                 if (node.prev.get_string() != null &&
-                        (node.prev.get_string().equals(ACCENT_TYPE_ICHI) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_ROKU) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_NANA) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_HACHI) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_IKU) == true))
+                        (node.prev.get_string().equals(ACCENT_TYPE_ICHI) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_ROKU) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_NANA) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_HACHI) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_IKU)))
                     node.prev.set_accent(2);
                 else
                     node.prev.set_accent(1);
-            else if (node.get_string().equals(ACCENT_TYPE_CHOU) == true)
+            else if (node.get_string().equals(ACCENT_TYPE_CHOU))
                 if (node.prev.get_string() != null &&
-                        (node.prev.get_string().equals(ACCENT_TYPE_ROKU) == true ||
-                                node.prev.get_string().equals(ACCENT_TYPE_NANA) == true))
+                        (node.prev.get_string().equals(ACCENT_TYPE_ROKU) ||
+                                node.prev.get_string().equals(ACCENT_TYPE_NANA)))
                     node.prev.set_accent(2);
                 else
                     node.prev.set_accent(1);
         }
-        if (node.get_string().equals(ACCENT_TYPE_JYUU) == true &&
+        if (node.get_string().equals(ACCENT_TYPE_JYUU) &&
                 node.get_chain_flag() != 1 &&
                 node.next != null &&
-                node.next.get_pos_group1().equals(ACCENT_TYPE_KAZU) == true
+                node.next.get_pos_group1().equals(ACCENT_TYPE_KAZU)
         )
             node.set_accent(0);
     }
@@ -271,7 +271,7 @@ public class NJDAccentTypeRule {
             } else if (node.prev != null || node.get_chain_flag() == 1) {
                 rule = get_rule(node.get_chain_rule(), node.prev.get_pos(), add_type);
 
-                if (rule.equals("*") == false) {
+                if (!rule.equals("*")) {
                     change_accent_type(top_node, node, rule, mora_size, add_type[0]);
                 }
 

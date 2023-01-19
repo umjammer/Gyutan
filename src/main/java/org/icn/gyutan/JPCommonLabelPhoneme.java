@@ -32,7 +32,7 @@
 package org.icn.gyutan;
 
 public class JPCommonLabelPhoneme {
-    static final String unvoice_list[] = {
+    static final String[] unvoice_list = {
             "a", "A",
             "i", "I",
             "u", "U",
@@ -55,7 +55,7 @@ public class JPCommonLabelPhoneme {
 
     void convert_unvoice() {
         for (int i = 0; i < unvoice_list.length; i += 2) {
-            if (phoneme.equals(unvoice_list[i]) == true) {
+            if (phoneme.equals(unvoice_list[i])) {
                 phoneme = unvoice_list[i + 1];
                 return;
             }

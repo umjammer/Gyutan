@@ -121,10 +121,10 @@ public class JPCommonNode {
     }
 
     void fprint(PrintStream ps) {
-        ps.printf("--- node ---\n");
+        ps.print("--- node ---\n");
         ps.printf("%s,%s,%s,%s,%d,%d\n",
                 pronunciation, pos, ctype, cform, accent, chain_flag);
-        ps.printf("--- END ---\n");
+        ps.print("--- END ---\n");
 
     }
 }

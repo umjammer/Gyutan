@@ -326,8 +326,8 @@ public class NJDUnvoicedVowelRule {
     };
 
     static int strtopcmp(String str, String pattern) {
-        //char[] strat = str.toCharArray();
-        //char[] patat = pattern.toCharArray();
+//        char[] strat = str.toCharArray();
+//        char[] patat = pattern.toCharArray();
 
         for (int i = 0; ; i++) {
             if (i == pattern.length())
@@ -335,7 +335,7 @@ public class NJDUnvoicedVowelRule {
             if (i == str.length())
                 return -1;
             if (str.charAt(i) != pattern.charAt(i))
-                //if(strat[i] != patat[i])
+//                if(strat[i] != patat[i])
                 return -1;
         }
     }
@@ -369,13 +369,13 @@ public class NJDUnvoicedVowelRule {
         }
 
         /* special symbol */
-        if (str.equals(UNVOICED_VOWEL_TOUTEN) == true) {
+        if (str.equals(UNVOICED_VOWEL_TOUTEN)) {
             mi.mora = UNVOICED_VOWEL_TOUTEN;
             mi.flag = 0;
             mi.size = UNVOICED_VOWEL_TOUTEN.length();
             return;
         }
-        if (str.equals(UNVOICED_VOWEL_QUESTION) == true) {
+        if (str.equals(UNVOICED_VOWEL_QUESTION)) {
             mi.mora = UNVOICED_VOWEL_QUESTION;
             mi.flag = 0;
             mi.size = UNVOICED_VOWEL_QUESTION.length();
@@ -388,10 +388,10 @@ public class NJDUnvoicedVowelRule {
         mi.size = 0;
 
         /* get mora */
-        for (int i = 0; i < unvoiced_vowel_mora_list.length; i++) {
-            int matched_size = strtopcmp(str.substring(index), unvoiced_vowel_mora_list[i]);
+        for (String s : unvoiced_vowel_mora_list) {
+            int matched_size = strtopcmp(str.substring(index), s);
             if (matched_size > 0) {
-                mi.mora = unvoiced_vowel_mora_list[i];
+                mi.mora = s;
                 mi.size = matched_size;
                 break;
             }
@@ -409,28 +409,28 @@ public class NJDUnvoicedVowelRule {
         if (next == null)
             return 0;
 
-        for (int i = 0; i < unvoiced_vowel_candidate_list1.length; i++) {
-            if (unvoiced_vowel_candidate_list1[i].equals(current) == true) {
-                for (int j = 0; j < unvoiced_vowel_next_mora_list1.length; j++)
-                    if (strtopcmp(next, unvoiced_vowel_next_mora_list1[j]) > 0)
+        for (String element : unvoiced_vowel_candidate_list1) {
+            if (element.equals(current)) {
+                for (String s : unvoiced_vowel_next_mora_list1)
+                    if (strtopcmp(next, s) > 0)
                         return 1;
                 return 0;
             }
         }
 
-        for (int i = 0; i < unvoiced_vowel_candidate_list2.length; i++) {
-            if (unvoiced_vowel_candidate_list2[i].equals(current) == true) {
-                for (int j = 0; j < unvoiced_vowel_next_mora_list2.length; j++)
-                    if (strtopcmp(next, unvoiced_vowel_next_mora_list2[j]) > 0)
+        for (String item : unvoiced_vowel_candidate_list2) {
+            if (item.equals(current)) {
+                for (String s : unvoiced_vowel_next_mora_list2)
+                    if (strtopcmp(next, s) > 0)
                         return 1;
                 return 0;
             }
         }
 
-        for (int i = 0; i < unvoiced_vowel_candidate_list3.length; i++) {
-            if (unvoiced_vowel_candidate_list3[i].equals(current) == true) {
-                for (int j = 0; j < unvoiced_vowel_next_mora_list3.length; j++)
-                    if (strtopcmp(next, unvoiced_vowel_next_mora_list3[j]) > 0)
+        for (String value : unvoiced_vowel_candidate_list3) {
+            if (value.equals(current)) {
+                for (String s : unvoiced_vowel_next_mora_list3)
+                    if (strtopcmp(next, s) > 0)
                         return 1;
                 return 0;
             }
@@ -501,14 +501,14 @@ public class NJDUnvoicedVowelRule {
                 if (mi2.mora != null && mi3.mora != null &&
                         mi1.nlink == mi2.nlink &&
                         mi2.nlink != mi3.nlink &&
-                        (mi1.mora.equals(UNVOICED_VOWEL_MA) == true ||
-                                mi1.mora.equals(UNVOICED_VOWEL_DE) == true) &&
-                        mi2.mora.equals(UNVOICED_VOWEL_SU) == true &&
-                        (mi2.nlink.get_pos().equals(UNVOICED_VOWEL_DOUSHI) == true ||
-                                mi2.nlink.get_pos().equals(UNVOICED_VOWEL_JODOUSHI) == true ||
-                                mi2.nlink.get_pos().equals(UNVOICED_VOWEL_KANDOUSHI) == true)) {
-                    if (mi3.nlink.get_pronunciation().equals(UNVOICED_VOWEL_QUESTION) == true ||
-                            mi3.nlink.get_pronunciation().equals(UNVOICED_VOWEL_CHOUON) == true)
+                        (mi1.mora.equals(UNVOICED_VOWEL_MA) ||
+                                mi1.mora.equals(UNVOICED_VOWEL_DE)) &&
+                        mi2.mora.equals(UNVOICED_VOWEL_SU) &&
+                        (mi2.nlink.get_pos().equals(UNVOICED_VOWEL_DOUSHI) ||
+                                mi2.nlink.get_pos().equals(UNVOICED_VOWEL_JODOUSHI) ||
+                                mi2.nlink.get_pos().equals(UNVOICED_VOWEL_KANDOUSHI))) {
+                    if (mi3.nlink.get_pronunciation().equals(UNVOICED_VOWEL_QUESTION) ||
+                            mi3.nlink.get_pronunciation().equals(UNVOICED_VOWEL_CHOUON))
                         mi2.flag = 0;
                     else
                         mi2.flag = 1;
@@ -516,10 +516,10 @@ public class NJDUnvoicedVowelRule {
 
                 /* rule 2: */
                 if (mi1.flag != 1 && mi2.flag == -1 && mi3.flag != 1 && mi2.mora != null &&
-                        mi2.nlink.get_pronunciation().equals(UNVOICED_VOWEL_SHI) == true &&
-                        (mi2.nlink.get_pos().equals(UNVOICED_VOWEL_DOUSHI) == true ||
-                                mi2.nlink.get_pos().equals(UNVOICED_VOWEL_JODOUSHI) == true ||
-                                mi2.nlink.get_pos().equals(UNVOICED_VOWEL_JOSHI) == true)) {
+                        mi2.nlink.get_pronunciation().equals(UNVOICED_VOWEL_SHI) &&
+                        (mi2.nlink.get_pos().equals(UNVOICED_VOWEL_DOUSHI) ||
+                                mi2.nlink.get_pos().equals(UNVOICED_VOWEL_JODOUSHI) ||
+                                mi2.nlink.get_pos().equals(UNVOICED_VOWEL_JOSHI))) {
                     if (mi2.atype == mi2.midx + 1) {
                         /* rule 4: */
                         mi2.flag = 0;
@@ -537,7 +537,7 @@ public class NJDUnvoicedVowelRule {
 
                 /* estimate unvoice */
                 if (mi1.flag == -1) {
-                    if (mi1.nlink.get_pos().equals(UNVOICED_VOWEL_FILLER) == true) {
+                    if (mi1.nlink.get_pos().equals(UNVOICED_VOWEL_FILLER)) {
                         /* rule 0 */
                         mi1.flag = 0;
                     } else if (mi2.flag == 1) {

@@ -32,7 +32,7 @@
 package org.icn.gyutan;
 
 public class JPCommonLabelWord {
-    static final String pos_list[] = {
+    static final String[] pos_list = {
             "その他", "xx",
             "感動詞", "09",
             "記号", "xx",
@@ -68,7 +68,7 @@ public class JPCommonLabelWord {
             "フィラー", "25"
     };
 
-    static final String cform_list[] = {
+    static final String[] cform_list = {
             "*", "xx",
             "その他", "6",
             "仮定形", "4",
@@ -79,7 +79,7 @@ public class JPCommonLabelWord {
             "連用形", "1"
     };
 
-    static final String ctype_list[] = {
+    static final String[] ctype_list = {
             "*", "xx",
             "カ行変格", "5",
             "サ行変格", "4",
@@ -112,7 +112,7 @@ public class JPCommonLabelWord {
         this.pronunciation = pron;
         int i = 0, find = 0;
         for (i = 0; i < pos_list.length; i += 2) {
-            if (pos_list[i].equals(pos) == true) {
+            if (pos_list[i].equals(pos)) {
                 find = 1;
                 break;
             }
@@ -125,7 +125,7 @@ public class JPCommonLabelWord {
 
         find = 0;
         for (i = 0; i < ctype_list.length; i += 2) {
-            if (ctype_list[i].equals(ctype) == true) {
+            if (ctype_list[i].equals(ctype)) {
                 find = 1;
                 break;
             }
@@ -140,7 +140,7 @@ public class JPCommonLabelWord {
 
         find = 0;
         for (i = 0; i < cform_list.length; i += 2) {
-            if (cform_list[i].equals(cform) == true) {
+            if (cform_list[i].equals(cform)) {
                 find = 1;
                 break;
             }
