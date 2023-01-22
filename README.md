@@ -65,6 +65,7 @@ mavenized Gyutan
 
  * make njd as user friendly library
  * ~~mora_size == 0 -> no pronounce -> delete~~
+ * github ci needs to download and build dictionary
 
 ---
 [Original](https://github.com/icn-lab/Gyutan)
