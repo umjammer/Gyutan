@@ -31,17 +31,24 @@
 
 package org.icn.gyutan;
 
+import java.util.logging.Level;
+
+import vavi.util.Debug;
+
+
+/**
+ * <pre>
+ * 無声子音: k ky s sh t ty ch ts h f hy p py
+ * Rule 0 フィラーは無声化しない
+ * Rule 1 助動詞の「です」と「ます」の「す」が無声化
+ * Rule 2 動詞，助動詞，助詞の「し」は無声化しやすい
+ * Rule 3 続けて無声化しない
+ * Rule 4 アクセント核で無声化しない
+ * Rule 5 無声子音(k ky s sh t ty ch ts h f hy p py)に囲まれた「i」と「u」が無声化
+ * 例外：s->s, s->sh, f->f, f->h, f->hy, h->f, h->h, h->hy
+ * </pre>
+ */
 public class NJDUnvoicedVowelRule {
-	/*
-	  無声子音: k ky s sh t ty ch ts h f hy p py
-	  Rule 0 フィラーは無声化しない
-	  Rule 1 助動詞の「です」と「ます」の「す」が無声化
-	  Rule 2 動詞，助動詞，助詞の「し」は無声化しやすい
-	  Rule 3 続けて無声化しない
-	  Rule 4 アクセント核で無声化しない
-	  Rule 5 無声子音(k ky s sh t ty ch ts h f hy p py)に囲まれた「i」と「u」が無声化
-	         例外：s->s, s->sh, f->f, f->h, f->hy, h->f, h->h, h->hy
-	*/
 
     static final String UNVOICED_VOWEL_FILLER = "フィラー";
     static final String UNVOICED_VOWEL_DOUSHI = "動詞";
@@ -362,13 +369,13 @@ public class NJDUnvoicedVowelRule {
 
         mi.nlink = node;
 
-        /* reset mora index and accent type for new word */
+        // reset mora index and accent type for new word
         if (index == 0 && node.get_chain_flag() != 1) {
             mi.midx = 0;
             mi.atype = node.get_accent();
         }
 
-        /* special symbol */
+        // special symbol
         if (str.equals(UNVOICED_VOWEL_TOUTEN)) {
             mi.mora = UNVOICED_VOWEL_TOUTEN;
             mi.flag = 0;
@@ -382,12 +389,12 @@ public class NJDUnvoicedVowelRule {
             return;
         }
 
-        /* reset */
+        // reset
         mi.mora = null;
         mi.flag = -1;
         mi.size = 0;
 
-        /* get mora */
+        // get mora
         for (String s : unvoiced_vowel_mora_list) {
             int matched_size = strtopcmp(str.substring(index), s);
             if (matched_size > 0) {
@@ -397,7 +404,7 @@ public class NJDUnvoicedVowelRule {
             }
         }
 
-        /*get unvoiced flag */
+        // get unvoiced flag
         int matched_size = strtopcmp(str.substring(index + mi.size), UNVOICED_VOWEL_QUOTATION);
         if (matched_size > 0) {
             mi.flag = 1;
@@ -475,13 +482,13 @@ public class NJDUnvoicedVowelRule {
             else
                 len = 0;
 
-            /* parse pronunciation */
+            // parse pronunciation
             for (int index = 0; index < len; ) {
                 if (mi1.mora == null) {
                     get_mora_information(node, index, mi1);
                 }
                 if (mi1.mora == null) {
-                    System.err.println("WARNING: NJDUnvoicedVowelRule.set_unvoiced_vowel(): Wrong pronunciation.");
+Debug.print(Level.WARNING, "Wrong pronunciation. (mora is null): " + node.string);
                     return;
                 }
 
@@ -497,7 +504,7 @@ public class NJDUnvoicedVowelRule {
                     get_mora_information(node, index + mi1.size + mi2.size, mi3);
                 }
 
-                /* rule 1: */
+                // rule 1:
                 if (mi2.mora != null && mi3.mora != null &&
                         mi1.nlink == mi2.nlink &&
                         mi2.nlink != mi3.nlink &&
@@ -514,17 +521,17 @@ public class NJDUnvoicedVowelRule {
                         mi2.flag = 1;
                 }
 
-                /* rule 2: */
+                // rule 2:
                 if (mi1.flag != 1 && mi2.flag == -1 && mi3.flag != 1 && mi2.mora != null &&
                         mi2.nlink.get_pronunciation().equals(UNVOICED_VOWEL_SHI) &&
                         (mi2.nlink.get_pos().equals(UNVOICED_VOWEL_DOUSHI) ||
                                 mi2.nlink.get_pos().equals(UNVOICED_VOWEL_JODOUSHI) ||
                                 mi2.nlink.get_pos().equals(UNVOICED_VOWEL_JOSHI))) {
                     if (mi2.atype == mi2.midx + 1) {
-                        /* rule 4: */
+                        // rule 4:
                         mi2.flag = 0;
                     } else {
-                        /* rule 5: */
+                        // rule 5:
                         mi2.flag = apply_unvoice_rule(mi2.mora, mi3.mora);
                     }
                     if (mi2.flag == 1) {
@@ -535,19 +542,19 @@ public class NJDUnvoicedVowelRule {
                     }
                 }
 
-                /* estimate unvoice */
+                // estimate unvoice
                 if (mi1.flag == -1) {
                     if (mi1.nlink.get_pos().equals(UNVOICED_VOWEL_FILLER)) {
-                        /* rule 0 */
+                        // rule 0
                         mi1.flag = 0;
                     } else if (mi2.flag == 1) {
-                        /* rule 3 */
+                        // rule 3
                         mi1.flag = 0;
                     } else if (mi1.atype == mi1.midx + 1) {
-                        /* rule 4 */
+                        // rule 4
                         mi1.flag = 0;
                     } else {
-                        /* rule 5 */
+                        // rule 5
                         mi1.flag = apply_unvoice_rule(mi1.mora, mi2.mora);
                     }
                 }
@@ -555,12 +562,12 @@ public class NJDUnvoicedVowelRule {
                     mi2.flag = 0;
                 }
 
-                /* store pronunciation */
+                // store pronunciation
                 buff.append(mi1.mora);
                 if (mi1.flag == 1)
                     buff.append(UNVOICED_VOWEL_QUOTATION);
 
-                /* prepare next step */
+                // prepare next step
                 index += mi1.size;
 
                 mi1 = mi2;
@@ -578,5 +585,4 @@ public class NJDUnvoicedVowelRule {
             node.set_pronunciation(buff.toString());
         }
     }
-
 }

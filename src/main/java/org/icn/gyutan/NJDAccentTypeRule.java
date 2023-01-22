@@ -32,6 +32,7 @@
 package org.icn.gyutan;
 
 public class NJDAccentTypeRule {
+
     static final String ACCENT_TYPE_KAZU = "数";
     static final String ACCENT_TYPE_ICHI = "一";
     static final String ACCENT_TYPE_NI = "二";
@@ -254,8 +255,7 @@ public class NJDAccentTypeRule {
 
     static void set_accent_type(NJD njd) {
         String rule;
-        int[] add_type = new int[1];
-        add_type[0] = 0;
+        int[] add_type = new int[] {0};
         int mora_size = 0;
 
         if (njd == null || njd.head == null)

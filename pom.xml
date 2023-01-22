@@ -9,7 +9,7 @@
 
   <profiles>
     <profile>
-      <!-- mvn -P MavenRepoCleaner antrun:run -Dinfile='file' -->
+      <!-- mvn -P run antrun:run -Dtext='text' -Dwave='file' -->
       <id>run</id>
       <build>
         <plugins>
@@ -22,14 +22,17 @@
             </goals>
             <configuration>
               <target>
-                <java classname="MavenRepoCleaner" fork="true">
+                <property file="local.properties" />
+                <property name="text" value="${text}" />
+                <property name="wave" value="${wave}" />
+                <java classname="Gyutan" fork="true">
                   <classpath>
                     <path refid="maven.compile.classpath"/>
-                    <path refid="maven.test.classpath"/>
                   </classpath>
-                  <jvmarg value="-Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties"/>
-                  <jvmarg value="-Dorg.apache.commons.logging.simplelog.log.net.java=info"/>
-                  <jvmarg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog"/>
+                  <arg line="-x ${sen.home}" />
+                  <arg line="-m ${fn.voice}" />
+                  <arg line="-ow ${wave}" />
+                  <arg value="${text}" />
                 </java>
               </target>
             </configuration>
@@ -92,13 +95,13 @@
     <dependency>
       <groupId>sen</groupId>
       <artifactId>sen</artifactId>
-      <version>1.2.2.2</version>
+      <version>1.2.3-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>icn-lab</groupId>
       <artifactId>sasakama</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.2-SNAPSHOT</version>
     </dependency>
 
     <dependency>

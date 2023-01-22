@@ -32,6 +32,7 @@
 package org.icn.gyutan;
 
 public class NJDDigitRule {
+
     static final String DIGIT_KAZU = "数";
     static final String DIGIT_SUUSETSUZOKU = "数接続";
     static final String DIGIT_JOSUUSHI = "助数詞";
@@ -566,7 +567,7 @@ public class NJDDigitRule {
                 return i;
             if (i == str.length())
                 return -1;
-            //		if(str.charAt(i) != pattern.charAt(i))
+//            if(str.charAt(i) != pattern.charAt(i))
             if (strat[i] != patat[i])
                 return -1;
         }
@@ -575,7 +576,7 @@ public class NJDDigitRule {
     static int get_digit(NJDNode node, int convert_flag) {
         if (node == null || node.get_string().equals("*"))
             return -1;
-        //node.fprint(System.err);
+//        node.fprint(System.err);
         if (node.get_pos_group1().equals(DIGIT_KAZU))
             for (int i = 0; i < digit_rule_numeral_list1.length; i += 3)
                 if (digit_rule_numeral_list1[i].equals(node.get_string())) {
@@ -698,7 +699,6 @@ public class NJDDigitRule {
                     break;
                 }
             }
-
         }
 
         return score;
@@ -712,12 +712,12 @@ public class NJDDigitRule {
         if (end == null)
             System.err.print("end is null\n");
 
-        //System.err.printf("++ convert digit sequence ++\n");
+//        System.err.printf("++ convert digit sequence ++\n");
         for (NJDNode node = start; node != end.next; node = node.next) {
-            //node.fprint(System.err);
+//            node.fprint(System.err);
             size++;
         }
-        //System.err.printf("++ END ++\n");
+//        System.err.printf("++ END ++\n");
 
         if (size <= 1)
             return;
@@ -854,7 +854,7 @@ public class NJDDigitRule {
                 int j = strtopcmp(str, digit_rule_voiced_sound_symbol_list[i]);
                 if (j >= 0) {
                     String buff = digit_rule_voiced_sound_symbol_list[i + 1];
-                    //buff += str.substring(j);
+//                    buff += str.substring(j);
                     node2.set_pronunciation(buff + str.substring(j));
                     break;
                 }
@@ -866,7 +866,7 @@ public class NJDDigitRule {
                 int j = strtopcmp(str, digit_rule_semivoiced_sound_symbol_list[i]);
                 if (j >= 0) {
                     String buff = digit_rule_semivoiced_sound_symbol_list[i + 1];
-                    //buff += str.substring(j);
+//                    buff += str.substring(j);
                     node2.set_pronunciation(buff + str.substring(j));
                     break;
                 }
@@ -934,7 +934,7 @@ public class NJDDigitRule {
             if (node.prev.get_pos_group1().equals(DIGIT_KAZU)) {
                 if (node.get_pos_group2().equals(DIGIT_JOSUUSHI) ||
                         node.get_pos_group1().equals(DIGIT_FUKUSHIKANOU)) {
-                    /* convert digit pron */
+                    // convert digit pron
                     if (search_numerative_class(digit_rule_numerative_class1b, node) == 1)
                         convert_digit_pronunciation(digit_rule_conv_table1b, node.prev);
                     else if (search_numerative_class(digit_rule_numerative_class1c1, node) == 1)
@@ -958,7 +958,7 @@ public class NJDDigitRule {
                     else if (search_numerative_class(digit_rule_numerative_class1k, node) == 1)
                         convert_digit_pronunciation(digit_rule_conv_table1k, node.prev);
 
-                    /* convert numerative pron */
+                    // convert numerative pron
                     if (search_numerative_class(digit_rule_numerative_class2b, node) == 1)
                         convert_numerative_pronunciation(digit_rule_conv_table2b, node.prev, node);
                     else if (search_numerative_class(digit_rule_numerative_class2c, node) == 1)
@@ -970,7 +970,7 @@ public class NJDDigitRule {
                     else if (search_numerative_class(digit_rule_numerative_class2f, node) == 1)
                         convert_numerative_pronunciation(digit_rule_conv_table2f, node.prev, node);
 
-                    /* modify accent phrase */
+                    // modify accent phrase
                     node.prev.set_chain_flag(0);
                     node.set_chain_flag(1);
                 }
@@ -986,7 +986,7 @@ public class NJDDigitRule {
                 if (node.get_pos_group1().equals(DIGIT_KAZU) &&
                         node.prev.get_string() != null &&
                         node.get_string() != null) {
-                    /* modify accent phrase */
+                    // modify accent phrase
                     find = 0;
                     for (String item : digit_rule_numeral_list4) {
                         if (node.prev.get_string().equals(item)) {
@@ -1034,7 +1034,7 @@ public class NJDDigitRule {
                             !node.prev.get_pos_group1().equals(DIGIT_KAZU)) &&
                     (node.next.get_pos_group2().equals(DIGIT_JOSUUSHI) ||
                             node.next.get_pos_group1().equals(DIGIT_FUKUSHIKANOU))) {
-                /* convert class3 */
+                // convert class3
                 for (int i = 0; i < digit_rule_numerative_class3.length; i += 2) {
                     if (node.next.get_string().equals(digit_rule_numerative_class3[i]) &&
                             node.next.get_read().equals(digit_rule_numerative_class3[i + 1])) {
@@ -1050,7 +1050,7 @@ public class NJDDigitRule {
                         break;
                     }
                 }
-                /* person */
+                // person
                 if (node.next.get_string().equals(DIGIT_NIN)) {
                     for (int i = 0; i < digit_rule_conv_table4.length; i += 2) {
                         if (node.get_string().equals(digit_rule_conv_table4[i])) {
@@ -1060,7 +1060,7 @@ public class NJDDigitRule {
                         }
                     }
                 }
-                /* the day of month */
+                // the day of month
                 if (node.next.get_string().equals(DIGIT_NICHI) &&
                         !node.get_string().equals("*")) {
                     if (node.prev != null &&
@@ -1133,7 +1133,6 @@ public class NJDDigitRule {
                 }
             }
         }
-
     }
 
     static void set_digit(NJD njd) {

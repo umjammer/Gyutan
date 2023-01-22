@@ -33,13 +33,17 @@ package org.icn.gyutan;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.logging.Level;
 
 import net.java.sen.StringTagger;
 import net.java.sen.Token;
 import org.icn.sasakama.Engine;
+import vavi.util.Debug;
 
 
 public class Gyutan {
+
     private static final String OOV = "未知語";
     private static final String[] REPLACE = {
 			"～", "〜",
@@ -91,7 +95,7 @@ public class Gyutan {
         boolean flag = engine.load(fn_voices);
 
         if (!engine.get_full_context_label_format().equals("HTS_TTS_JPN")) {
-            System.err.println("ERROR: Gyutan.initializeEngine(): hts_voice is not support HTS_TTS_JPN");
+Debug.print(Level.SEVERE, "hts_voice is not support HTS_TTS_JPN");
             engine.clear();
             engine = null;
             return false;
@@ -109,15 +113,17 @@ public class Gyutan {
     }
 
     public String[] analysis_text(String text) {
-        Token[] token = null;
-        String[] feature = null;
-
         if (!availableSen())
             return null;
 
+        String[] feature = null;
+
         try {
-            token = sen.analyze(replace(hankakuToZenkaku(text)));
+            String normalized = replace(hankakuToZenkaku(text));
+Debug.println(Level.FINER, "normalized: " + normalized);
+            Token[] token = sen.analyze(normalized);
             feature = tokenToString(token);
+//Arrays.stream(feature).forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,10 +134,11 @@ public class Gyutan {
     public String[] tokenToString(Token[] token) {
         String[] retString = new String[token.length];
         for (int i = 0; i < retString.length; i++) {
-//            System.err.printf("surface:%s, terminfo:%s\n", token[i].getSurface(), token[i].getTermInfo());
-//            System.err.printf("pos:%s,cform:%s,basic:%s,reading:%s,pron:%s\n",
-//                    token[i].getPos(), token[i].getCform(), token[i].getBasicString(), token[i].getReading(), token[i].getPronunciation());
-//            System.err.printf("addInfo:%s\n", token[i].getAddInfo());
+//Debug.printf(Level.FINER, "surface:%s, terminfo: %s", token[i].getSurface(), token[i].getTermInfo());
+//Debug.printf(Level.FINER, "pos: %s, cform: %s, basic: %s, reading: %s, pron: %s",
+//        token[i].getPos(), token[i].getCform(), token[i].getBasicString(), token[i].getReading(), token[i].getPronunciation());
+//Debug.printf(Level.FINER, "termInfo: %s", token[i].getTermInfo());
+//Debug.printf(Level.FINER, "addInfo: %s", token[i].getAddInfo());
             if (!token[i].getPos().equals(OOV)) {
 //                String[] info = token[i].getTermInfo().split(",");
 //                if (info[6].equals("自分"))
@@ -144,7 +151,8 @@ public class Gyutan {
 //                    sb.append(info[j]);
 //                }
 //
-//                retString[i] = token[i].getSurface() + "," + sb.toString();                    //System.err.printf("%s\n", retString[i]);
+//                retString[i] = token[i].getSurface() + "," + sb.toString();
+//Debug.print(Level.FINER, retString[i]);
                 retString[i] = token[i].getSurface() + "," + token[i].getTermInfo();
                 if (!token[i].getPos().equals("記号-句点")) {
                     retString[i] += ",0/" + token[i].getPronunciation().length(); // TODO accent is 0 fixed
@@ -153,7 +161,7 @@ public class Gyutan {
                 retString[i] = String.format("%s,%s,*,*,*,*,*,%s,*,*,*,*,*", token[i].getSurface(), OOV, token[i].getSurface());
             }
 
-//            System.err.printf("feature[%d]:%s\n", i, retString[i]);
+//Debug.printf(Level.FINER, "feature[%d]:%s", i, retString[i]);
         }
 
         return retString;
@@ -229,16 +237,18 @@ public class Gyutan {
     }
 
     public int synthesis(FileOutputStream wavf, FileOutputStream logf) {
-//        long t1, t2;
+        long t1, t2;
         if (jpcommon == null)
             return -1;
         int result = 0;
 
-//        t1 = System.nanoTime();
+        t1 = System.nanoTime();
         if (jpcommon.get_label_size() > 2) {
-            if (engine.synthesize_from_strings(jpcommon.get_label_feature())) {
-//                t2 = System.nanoTime();
-//                System.err.printf("++synthesize time[us]:%f\n", (t2 - t1) / 1e+03);
+            String[] feature = jpcommon.get_label_feature();
+//Arrays.stream(feature).forEach(System.out::println); // label
+            if (engine.synthesize_from_strings(feature)) {
+                t2 = System.nanoTime();
+Debug.printf(Level.FINER, "++synthesize time[us]:%f", (t2 - t1) / 1e+03);
                 result = 1;
             }
             if (wavf != null)
@@ -307,7 +317,7 @@ public class Gyutan {
 
 //        t2 = System.nanoTime();
         NJDPronunciationRule.set_pronunciation(njd);
-//        System.err.printf("== after set_pronunciation ==\n");
+//Debug.printf(Level.FINER, "== after set_pronunciation ==");
 //        njd.print();
 
 //        t3 = System.nanoTime();

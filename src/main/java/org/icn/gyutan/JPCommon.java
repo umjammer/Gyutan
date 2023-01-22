@@ -32,10 +32,13 @@
 package org.icn.gyutan;
 
 import java.io.PrintStream;
+import java.util.logging.Level;
+
+import vavi.util.Debug;
 
 
 public class JPCommon {
-    static String[] jpcommon_pos_list = {
+    static final String[] jpcommon_pos_list = {
             "その他", "間投", "*", "*", "その他",
             "フィラー", "*", "*", "*", "感動詞",
             "感動詞", "*", "*", "*", "感動詞",
@@ -111,7 +114,7 @@ public class JPCommon {
             "連体詞", "*", "*", "*", "連体詞"
     };
 
-    static String[] jpcommon_cform_list = {
+    static final String[] jpcommon_cform_list = {
             "*", "*",
             "ガル接続", "その他",
             "音便基本形", "基本形",
@@ -142,7 +145,7 @@ public class JPCommon {
             "連用形", "連用形"
     };
 
-    static String[] jpcommon_ctype_list = {
+    static final String[] jpcommon_ctype_list = {
             "*", "*",
             "カ変・クル", "カ行変格",
             "カ変・来ル", "カ行変格",
@@ -301,7 +304,7 @@ public class JPCommon {
                 return jpcommon_pos_list[i + 4];
         }
 
-        System.err.printf("WARNING: convert_pos(): %s %s %s %s are not appropriate POS.\n",
+Debug.printf(Level.WARNING, " convert_pos(): %s %s %s %s are not appropriate POS.",
                 pos, pos_group1, pos_group2, pos_group3);
 
         return jpcommon_pos_list[4];
@@ -313,7 +316,7 @@ public class JPCommon {
                 return jpcommon_ctype_list[i + 1];
         }
 
-        System.err.printf("WARNING: convert_ctype(): %s is not appropriate conjugation type.\n", ctype);
+Debug.printf(Level.WARNING, " convert_ctype(): %s is not appropriate conjugation type.", ctype);
         return jpcommon_ctype_list[1];
     }
 
@@ -323,7 +326,7 @@ public class JPCommon {
                 return jpcommon_cform_list[i + 1];
         }
 
-        System.err.printf("WARNING: convert_ctype(): %s is not appropriate conjuagation form.\n", cform);
+Debug.printf(Level.WARNING, " convert_ctype(): %s is not appropriate conjuagation form.", cform);
         return jpcommon_cform_list[1];
     }
 }

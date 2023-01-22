@@ -32,6 +32,7 @@
 package org.icn.gyutan;
 
 public class NJDAccentPhraseRule {
+
     static final String ACCENT_PHRASE_MEISHI = "名詞";
     static final String ACCENT_PHRASE_KEIYOUSHI = "形容詞";
     static final String ACCENT_PHRASE_DOUSHI = "動詞";
@@ -53,7 +54,7 @@ public class NJDAccentPhraseRule {
     static final String ACCENT_PHRASE_SETTOUSHI = "接頭詞";
     static final String ACCENT_PHRASE_SEI = "姓";
     static final String ACCENT_PHRASE_MEI = "名";
-	
+
 	/*
 	  Rule 01 デフォルトはくっつける
 	  Rule 02 「名詞」の連続はくっつける

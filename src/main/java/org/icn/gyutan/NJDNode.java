@@ -32,10 +32,15 @@
 package org.icn.gyutan;
 
 import java.io.PrintStream;
+import java.util.logging.Level;
+
+import vavi.util.Debug;
 
 
 public class NJDNode {
+
     static final String NODATA = "*";
+
     String string;
     String pos;
     String pos_group1;
@@ -76,6 +81,13 @@ public class NJDNode {
         next = null;
     }
 
+    /**
+     *
+     * @param str source
+     * @param index OUT index of source
+     * @param buff result
+     * @param d delimiter
+     */
     private void get_token_from_string(String str, int[] index, StringBuilder buff, char d) {
         buff.delete(0, buff.length());
         char[] strat = str.toCharArray();
@@ -171,7 +183,7 @@ public class NJDNode {
     void set_accent(int accent) {
         this.accent = accent;
         if (accent < 0) {
-            System.err.println("WARNING: NJDNode.set_accent(): Accent must be positive value");
+Debug.print(Level.WARNING, " NJDNode.set_accent(): Accent must be positive value");
             this.accent = 0;
         }
     }
@@ -179,7 +191,7 @@ public class NJDNode {
     void set_mora_size(int size) {
         mora_size = size;
         if (mora_size < 0) {
-            System.err.println("WARNING: NJDNode.set_mora_size(): Mora size must be positive value");
+Debug.print(Level.WARNING, " NJDNode.set_mora_size(): Mora size must be positive value");
             mora_size = 0;
         }
     }
@@ -217,7 +229,7 @@ public class NJDNode {
     void add_accent(int accent) {
         this.accent += accent;
         if (this.accent < 0) {
-            System.err.println("WARNING: NJDNode.add_accent(): Accent must be positive value");
+Debug.print(Level.WARNING, "Accent must be positive value");
             this.accent = 0;
         }
     }
@@ -225,7 +237,7 @@ public class NJDNode {
     void add_mora_size(int size) {
         mora_size += size;
         if (mora_size < 0) {
-            System.err.println("WARNING: NJDNode.add_mora_size(): Mora size must be positive value");
+Debug.printf(Level.WARNING, "Mora size must be positive value");
             mora_size = 0;
         }
     }
@@ -326,7 +338,7 @@ public class NJDNode {
         StringBuilder buff_acc = new StringBuilder();
 
         load_cform(str, buff_string, buff_orig, buff_read, buff_pron, buff_acc);
-        if (buff_acc.indexOf("*") != -1 || buff_acc.indexOf("/") == -1) {
+        if (buff_acc.indexOf("*") != -1 || buff_acc.indexOf("/") == -1) { // assume "*" as "記号" (#/# is word for pronounce)
             set_for_symbol(buff_string, buff_orig, buff_read, buff_pron);
             return;
         }
@@ -403,7 +415,7 @@ public class NJDNode {
 
         if (buff.length() == 0) {
             set_accent(0);
-            System.err.println("WARNING: NJDNode.set_for_single_word(): Accent is empty.");
+Debug.print(Level.WARNING, "Accent is empty.");
         } else {
             set_accent(Integer.parseInt(buff.toString()));
         }
@@ -411,7 +423,7 @@ public class NJDNode {
         get_token_from_string(buff_acc.toString(), index_acc, buff, ':');
         if (buff.length() == 0) {
             set_mora_size(0);
-            System.err.println("WARNING: NJDNode.set_for_single_word(): Mora size is empty.");
+Debug.print(Level.WARNING, "Mora size is empty.");
         } else {
             set_mora_size(Integer.parseInt(buff.toString()));
         }
@@ -463,7 +475,7 @@ public class NJDNode {
             get_token_from_string(buff_acc.toString(), index_acc, buff, ':');
             if (buff.length() == 0) {
                 set_mora_size(0);
-                System.err.println("WARNING: NJDNode.parse_chained_word: Mora size is empty.");
+Debug.print(Level.WARNING, "Mora size is empty.");
             } else {
                 set_mora_size(Integer.parseInt(buff.toString()));
             }
@@ -474,12 +486,12 @@ public class NJDNode {
 
     NJDNode insert(NJDNode prev, NJDNode next) {
         if (prev == null || next == null) {
-            System.err.println("ERROR: NJDNode.insert(): NJDNode is not specified.");
-            System.exit(1);
+            throw new IllegalArgumentException("NJDNode is not specified.");
         }
 
-        NJDNode tail;
-        for (tail = this; tail.next != null; tail = tail.next) ;
+        NJDNode tail = this;
+        while (tail.next != null)
+            tail = tail.next;
         prev.next = this;
         this.prev = prev;
         next.prev = tail;

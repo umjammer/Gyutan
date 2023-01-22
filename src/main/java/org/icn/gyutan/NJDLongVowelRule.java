@@ -32,6 +32,7 @@
 package org.icn.gyutan;
 
 public class NJDLongVowelRule {
+
     static final String[] long_vowel_table = {
             "エイ", "エー",
             "ケイ", "ケー",
@@ -58,7 +59,7 @@ public class NJDLongVowelRule {
                 return i;
             if (i == str.length())
                 return -1;
-            //if(str.charAt(i) != pattern.charAt(i))
+//            if (str.charAt(i) != pattern.charAt(i))
             if (strat[i] != patat[i])
                 return -1;
         }

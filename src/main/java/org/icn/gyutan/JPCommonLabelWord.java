@@ -31,7 +31,13 @@
 
 package org.icn.gyutan;
 
+import java.util.logging.Level;
+
+import vavi.util.Debug;
+
+
 public class JPCommonLabelWord {
+
     static final String[] pos_list = {
             "その他", "xx",
             "感動詞", "09",
@@ -118,7 +124,7 @@ public class JPCommonLabelWord {
             }
         }
         if (find == 0) {
-            System.err.printf("WARNING: JPCommonLabelWord.initialize(): %s is unknown POS.\n", pos);
+Debug.printf(Level.WARNING, "JPCommonLabelWord.initialize(): %s is unknown POS.", pos);
             i = 0;
         }
         this.pos = pos_list[i + 1];
@@ -131,8 +137,7 @@ public class JPCommonLabelWord {
             }
         }
         if (find == 0) {
-            System.err.printf(
-                    "WARNING: JPCommonLabelWord_initializel() in jpcommon_label.c: %s is unknown conjugation type.\n",
+Debug.printf(Level.WARNING, "JPCommonLabelWord_initializel() in jpcommon_label.c: %s is unknown conjugation type.",
                     ctype);
             i = 0;
         }
@@ -146,7 +151,7 @@ public class JPCommonLabelWord {
             }
         }
         if (find == 0) {
-            System.err.printf("WARNING: JPCommonLabelWord.initialize(): %s is unknown conjugation form.\n", cform);
+Debug.printf(Level.WARNING, " JPCommonLabelWord.initialize(): %s is unknown conjugation form.", cform);
             i = 0;
         }
         this.cform = cform_list[i + 1];
@@ -156,5 +161,4 @@ public class JPCommonLabelWord {
         this.prev = prev;
         this.next = next;
     }
-
 }

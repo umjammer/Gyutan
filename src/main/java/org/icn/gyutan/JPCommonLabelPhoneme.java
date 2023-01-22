@@ -31,6 +31,11 @@
 
 package org.icn.gyutan;
 
+import java.util.logging.Level;
+
+import vavi.util.Debug;
+
+
 public class JPCommonLabelPhoneme {
     static final String[] unvoice_list = {
             "a", "A",
@@ -61,8 +66,6 @@ public class JPCommonLabelPhoneme {
             }
         }
 
-        System.err.printf("WARNING: JPCommonLabelPhoneme.convert_unvoice(): %s cannot be unvoiced.", phoneme);
+        Debug.printf(Level.WARNING, " JPCommonLabelPhoneme.convert_unvoice(): %s cannot be unvoiced.", phoneme);
     }
-
-
 }

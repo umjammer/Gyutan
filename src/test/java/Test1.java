@@ -53,17 +53,17 @@ public class Test1 {
     @Test
     void test1() throws Exception {
         Gyutan.main(new String[] {
-                "-x",
+                "-x", // sen
                 sen_home,
-                "-m",
+                "-m", // voice
                 fn_voice,
                 "-ow",
                 "tmp/test.wav",
-                "-ol",
+                "-ol", // HTS-style full-context labels
                 "tmp/test.lab",
-                "-of",
+                "-of", // HTS-style full-context labels w/ time
                 "tmp/test.full.lab",
-                "-g",
+                "-g", // volume [dB]
                 "-40",
                 "src/test/resources/test.txt"
         });

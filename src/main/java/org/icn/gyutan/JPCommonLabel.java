@@ -33,6 +33,9 @@ package org.icn.gyutan;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.logging.Level;
+
+import vavi.util.Debug;
 
 
 public class JPCommonLabel {
@@ -253,14 +256,14 @@ public class JPCommonLabel {
         if (short_pause_flag) {
             if (phoneme_tail != null) {
                 if (phoneme_tail.phoneme.equals(PHONEME_SHORT_PAUSE)) {
-                    System.err.print("WARNING: JPCommonLabel.insert_word(): short pause should not be chained\n");
+Debug.print(Level.WARNING, "short pause should not be chained");
                     return;
                 }
                 phoneme_tail.next = new JPCommonLabelPhoneme();
                 phoneme_tail.next.initialize(PHONEME_SHORT_PAUSE, phoneme_tail, null, null);
                 phoneme_tail = phoneme_tail.next;
             } else {
-                System.err.print("WARNING: JPCommonLabel.insert_word(): First mora should not be short pause.\n");
+Debug.print(Level.WARNING, "First mora should not be short pause.");
             }
             short_pause_flag = false;
         }
@@ -299,7 +302,7 @@ public class JPCommonLabel {
                     phoneme_tail.up.up.up.emotion = FLAG_QUESTION;
             }
         } else {
-            System.err.print("WARNING* JPCommonLabel.push_word(): First mora should not be question flag.\n");
+Debug.print(Level.WARNING, "First mora should not be question flag.");
         }
 
         short_pause_flag = true;
@@ -327,7 +330,7 @@ public class JPCommonLabel {
                     mora_tail = mora_tail.next;
                     word_tail.tail = mora_tail;
                 } else {
-                    System.err.print("WARNING: JPCommonLabel.push_word(): First mora should not be long vowel symbol.\n");
+Debug.print(Level.WARNING, "First mora should not be long vowel symbol.");
                 }
                 pron = pron.substring(find);
             } else {
@@ -335,10 +338,11 @@ public class JPCommonLabel {
                 if (find != -1) {
                     //System.err.printf("++ proc2 ++\n");
 
-                    if (phoneme_tail != null && is_first_word != 1)
+                    if (phoneme_tail != null && is_first_word != 1) {
                         phoneme_tail.convert_unvoice();
-                    else
-                        System.err.print("WARNING: JPCommonLabel.push_word(): First mora should not be unvoice flag.\n");
+                    } else {
+Debug.print(Level.WARNING, "First mora should not be unvoice flag.");
+                    }
                     pron = pron.substring(find);
                 } else {
                     //System.err.printf("++ proc3 ++\n");
@@ -399,7 +403,7 @@ public class JPCommonLabel {
                         }
                         pron = pron.substring(find);
                     } else {
-                        System.err.printf("WARNING: JPCommonLabel.push_word(): %s is wrong mora list.\n", pron);
+Debug.printf(Level.WARNING, "'%s' is wrong mora list.", pron);
                         break;
                     }
                 }
@@ -709,7 +713,7 @@ public class JPCommonLabel {
         for (JPCommonLabelPhoneme p = phoneme_head; p != null; p = p.next)
             size++;
         if (size < 1) {
-            System.err.print("WARNING: JPCommonLabel.make(): No phoneme.\n");
+Debug.print(Level.WARNING, "JPCommonLabel.make(): No phoneme.");
             return;
         }
 

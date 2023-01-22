@@ -34,9 +34,13 @@ package org.icn.gyutan;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.logging.Level;
+
+import vavi.util.Debug;
 
 
 public class NJD {
+
     NJDNode head;
     NJDNode tail;
 
@@ -60,7 +64,7 @@ public class NJD {
         if (index[0] == str.length())
             return 0;
 
-        //char c = str.charAt(index[0]);
+//        char c = str.charAt(index[0]);
         char c = charat[index[0]];
         if (c == d) {
             index[0]++;
@@ -71,7 +75,7 @@ public class NJD {
             index[0]++;
             if (index[0] == str.length())
                 return 0;
-            //c = str.charAt(index[0]);
+//            c = str.charAt(index[0]);
             c = charat[index[0]];
         }
 
@@ -80,7 +84,7 @@ public class NJD {
             buff.append(c);
             index[0]++;
             if (index[0] < str.length())
-                //c = str.charAt(index[0]);
+//                c = str.charAt(index[0]);
                 c = charat[index[0]];
         }
         if (c == d)
@@ -155,8 +159,7 @@ public class NJD {
         StringBuilder chain_rule = new StringBuilder();
         StringBuilder chain_flag = new StringBuilder();
 
-        int[] index = new int[1];
-        index[0] = 0;
+        int[] index = new int[] {0};
 
         while (true) {
             get_token_from_string(str, index, string, ',');
@@ -204,7 +207,7 @@ public class NJD {
 
     void load_from_file(String str, FileInputStream fis) {
         if (fis == null) {
-            System.err.println("WARNING: NJD.load_from_file: FileInputStream should not be null.");
+Debug.print(Level.WARNING, "FileInputStream should not be null.");
             return;
         }
 
@@ -327,6 +330,8 @@ public class NJD {
     }
 
     void fprint(PrintStream ps) {
+        ps.println("string, pos, pos_group1, pos_group2, pos_group3, " +
+                "ctype, cform, orig, read, pronunciation, accent, mora_size, chain_rule, chain_flag");
 
         for (NJDNode node = head; node != null; node = node.next)
             node.print();

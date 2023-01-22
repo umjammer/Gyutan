@@ -1,10 +1,14 @@
 [![Release](https://jitpack.io/v/umjammer/Gyutan.svg)](https://jitpack.io/#umjammer/Gyutan)
 [![Java CI](https://github.com/umjammer/Gyutan/actions/workflows/maven.yml/badge.svg)](https://github.com/umjammer/Gyutan/actions/workflows/maven.yml)
-[![CodeQL](https://github.com/umjammer/Gyutan/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/Gyutan/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/umjammer/Gyutan/actions/workflows/codeql.yml/badge.svg)](https://github.com/umjammer/Gyutan/actions/workflows/codeql.yml)
 ![Java](https://img.shields.io/badge/Java-8-b07219)
 [![Parent](https://img.shields.io/badge/Parent-vavi--speech-pink)](https://github.com/umjammer/vavi-speech)
 
-mavenized, librarinize Gyutan
+# Gyutan
+
+<img src="https://user-images.githubusercontent.com/493908/213547722-3ee7bd92-9adb-415d-bac4-b318ec1174a7.png" width="160"/>
+
+mavenized Gyutan
 
 ## Install
 
@@ -44,18 +48,27 @@ mavenized, librarinize Gyutan
 
 ## Usage
 
+### test
 ```shell
  $ mvn test
 ```
+### run
+```shell
+ $ mvn -P run antrun:run -Dtext="src/test/resources/test.txt" -Dwave="tmp/out.wav"
+```
+
+## Reference
+
+ * [HTS](http://hts.sp.nitech.ac.jp/)
 
 ## TODO
 
  * make njd as user friendly library
+ * ~~mora_size == 0 -> no pronounce -> delete~~
 
 ---
 [Original](https://github.com/icn-lab/Gyutan)
 
-# Gyutan
 Copyright (c) 2015-2016 Intelligent Communication Network (Ito-Nose) Laboratory Tohoku University.   
 Copyright (c) 2001-2016 Nagoya Institute of Technology Department of Computer Science.   
 All rights reserved.  

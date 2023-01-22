@@ -36,6 +36,7 @@ import java.nio.file.Paths;
 
 
 public class Gyutan {
+
     final static String progname = "gyutan";
     final static String version = "version: 20151228";
 

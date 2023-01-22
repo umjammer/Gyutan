@@ -31,7 +31,13 @@
 
 package org.icn.gyutan;
 
+import java.util.logging.Level;
+
+import vavi.util.Debug;
+
+
 public class NJDPronunciationRule {
+
     static final String[] pronunciation_list = {
             "ヴョ", "ヴョ", "1",
             "ヴュ", "ヴュ", "1",
@@ -570,7 +576,7 @@ public class NJDPronunciationRule {
     static void set_pronunciation_sub2(NJD njd) {
         for (NJDNode node = njd.head; node != null; node = node.next) {
             if (node.next != null &&
-                    node.next.get_string().equals(PRONUNCIATION_U) &&
+                    node.next.get_pronunciation().equals(PRONUNCIATION_U) &&
                     node.next.get_pos().equals(PRONUNCIATION_JODOUSHI) &&
                     (node.get_pos().equals(PRONUNCIATION_DOUSHI) ||
                             node.get_pos().equals(PRONUNCIATION_JODOUSHI)) &&
@@ -589,7 +595,13 @@ public class NJDPronunciationRule {
 
     static void set_pronunciation(NJD njd) {
         set_pronunciation_sub1(njd);
+//Debug.println(Level.FINER, "after sub1:");
+//njd.print();
         njd.remove_silent_node();
+//Debug.println(Level.FINER, "after remove:");
+//njd.print();
         set_pronunciation_sub2(njd);
+//Debug.println(Level.FINER, "after sub2:");
+//njd.print();
     }
 }
