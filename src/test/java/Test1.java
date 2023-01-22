@@ -18,9 +18,13 @@ import javax.sound.sampled.LineEvent;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledIf;
 import vavi.util.properties.annotation.Property;
 import vavi.util.properties.annotation.PropsEntity;
+import vavix.util.Checksum;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -51,6 +55,23 @@ public class Test1 {
     }
 
     @Test
+    void test0() throws Exception {
+        // Gyutan's essence is text to label conversion
+        Gyutan.main(new String[] {
+                "-x", // sen
+                sen_home,
+                "-m", // voice
+                fn_voice,
+                "-of", // HTS-style full-context labels w/ time
+                "tmp/test.full.lab",
+                "src/test/resources/test.txt"
+        });
+        assertEquals(Checksum.getChecksum(Paths.get("src/test/resources/test.full.lab")),
+                Checksum.getChecksum(Paths.get("tmp/test.full.lab")));
+    }
+
+    @Test
+    @DisabledIfEnvironmentVariable(named = "GITHUB_WORKFLOW", matches = ".*")
     void test1() throws Exception {
         Gyutan.main(new String[] {
                 "-x", // sen
