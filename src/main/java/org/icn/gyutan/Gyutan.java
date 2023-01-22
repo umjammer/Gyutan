@@ -154,9 +154,6 @@ Debug.println(Level.FINER, "normalized: " + normalized);
 //                retString[i] = token[i].getSurface() + "," + sb.toString();
 //Debug.print(Level.FINER, retString[i]);
                 retString[i] = token[i].getSurface() + "," + token[i].getTermInfo();
-                if (!token[i].getPos().equals("記号-句点")) {
-                    retString[i] += ",0/" + token[i].getPronunciation().length(); // TODO accent is 0 fixed
-                }
             } else {
                 retString[i] = String.format("%s,%s,*,*,*,*,*,%s,*,*,*,*,*", token[i].getSurface(), OOV, token[i].getSurface());
             }
