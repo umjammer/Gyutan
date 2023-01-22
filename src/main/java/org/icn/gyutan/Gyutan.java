@@ -33,7 +33,6 @@ package org.icn.gyutan;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.logging.Level;
 
 import net.java.sen.StringTagger;
