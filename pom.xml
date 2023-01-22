@@ -99,9 +99,9 @@
     </dependency>
 
     <dependency>
-      <groupId>icn-lab</groupId>
-      <artifactId>sasakama</artifactId>
-      <version>0.0.2-SNAPSHOT</version>
+      <groupId>com.github.umjammer</groupId> <!-- icn-lab -->
+      <artifactId>Sasakama</artifactId>
+      <version>0.0.1</version>
     </dependency>
 
     <dependency>
