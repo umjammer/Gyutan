@@ -37,11 +37,11 @@ public class NJDDigitRule {
     static final String DIGIT_SUUSETSUZOKU = "数接続";
     static final String DIGIT_JOSUUSHI = "助数詞";
     static final String DIGIT_FUKUSHIKANOU = "副詞可能";
-    static final String DIGIT_HAIHUN1 = "―";     /* horizontal bar */
-    static final String DIGIT_HAIHUN2 = "−";    /* minus sign */
-    static final String DIGIT_HAIHUN3 = "‐";     /* hyphen */
-    static final String DIGIT_HAIHUN4 = "—";     /* em dash */
-    static final String DIGIT_HAIHUN5 = "－";     /* fullwidth hyphen-minus */
+    static final String DIGIT_HAIHUN1 = "―"; /* horizontal bar */
+    static final String DIGIT_HAIHUN2 = "−"; /* minus sign */
+    static final String DIGIT_HAIHUN3 = "‐"; /* hyphen */
+    static final String DIGIT_HAIHUN4 = "—"; /* em dash */
+    static final String DIGIT_HAIHUN5 = "－"; /* fullwidth hyphen-minus */
     static final String DIGIT_KAKKO1 = "（";
     static final String DIGIT_KAKKO2 = "）";
     static final String DIGIT_BANGOU = "番号";

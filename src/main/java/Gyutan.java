@@ -31,6 +31,7 @@
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -85,8 +86,6 @@ public class Gyutan {
         System.err.print(
                 "    text file                                                                [stdin]\n");
         System.err.print("\n");
-
-        System.exit(0);
     }
 
     public static void main(String[] args) {
@@ -120,12 +119,13 @@ public class Gyutan {
             System.exit(1);
         }
 
-
-        org.icn.gyutan.Gyutan gyutan = new org.icn.gyutan.Gyutan();
-        boolean flag = gyutan.initialize(dn_dict, fn_voice);
-        if (!flag) {
+        org.icn.gyutan.Gyutan gyutan = null;
+        try {
+            gyutan = new org.icn.gyutan.Gyutan(dn_dict, fn_voice);
+        } catch (IOException e) {
             System.err.println("Error: initialize failed");
             usage();
+            return;
         }
 
         String txtfn = null;
@@ -188,7 +188,7 @@ public class Gyutan {
             byte[] buf = new byte[txtfp.available()];
             txtfp.read(buf);
             String text = new String(buf);
-            gyutan.synthesis(text, wavfp, logfp);
+            gyutan.synthesize(text, wavfp, logfp);
 
             if (labelfp != null)
                 gyutan.save_label(labelfp);

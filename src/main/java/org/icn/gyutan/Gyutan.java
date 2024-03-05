@@ -32,6 +32,7 @@
 package org.icn.gyutan;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.logging.Level;
 
@@ -60,34 +61,25 @@ public class Gyutan {
     private JPCommon jpcommon;
     private Engine engine;
 
-    public boolean initialize(String confPath, String fn_voice) {
+    public Gyutan(String confPath, String fn_voice) throws IOException {
         jpcommon = null;
         njd = null;
 
         // for Sen;
-        boolean flagSen = initializeSen(confPath);
+        initializeSen(confPath);
 
         // for HTS_Engine;
-        boolean flagEngine = initializeEngine(fn_voice);
-
-        return flagSen && flagEngine;
+        initializeEngine(fn_voice);
     }
 
-    public boolean initializeSen(String confPath) {
-        try {
-            sen = StringTagger.getInstance(confPath + "/conf/sen.xml");
-//            CompositPostProcessor cpp = new CompositPostProcessor();
-//            cpp.readRules(new BufferedReader(new StringReader("記号-アルファベット")));
-//            sen.addPostProcessor(cpp);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            sen = null;
-            return false;
-        }
+    private void initializeSen(String confPath) throws IOException {
+        sen = StringTagger.getInstance(confPath + "/conf/sen.xml");
+//        CompositPostProcessor cpp = new CompositPostProcessor();
+//        cpp.readRules(new BufferedReader(new StringReader("記号-アルファベット")));
+//        sen.addPostProcessor(cpp);
     }
 
-    public boolean initializeEngine(String fn_voice) {
+    private void initializeEngine(String fn_voice) {
         String[] fn_voices = new String[1];
         fn_voices[0] = fn_voice;
         engine = new Engine();
@@ -96,11 +88,8 @@ public class Gyutan {
         if (!engine.get_full_context_label_format().equals("HTS_TTS_JPN")) {
 Debug.print(Level.SEVERE, "hts_voice is not support HTS_TTS_JPN");
             engine.clear();
-            engine = null;
-            return false;
+            throw new IllegalArgumentException(engine.get_full_context_label_format());
         }
-
-        return flag;
     }
 
     public boolean availableSen() {
@@ -210,29 +199,29 @@ Debug.println(Level.FINER, "normalized: " + normalized);
             return jpcommon.label.get_feature();
     }
 
-    public int synthesis(String text, FileOutputStream wavf, FileOutputStream logf) {
+    public int synthesize(String text, FileOutputStream wavf, FileOutputStream logf) {
         if (!availableSen() || !availableEngine())
             return -1;
 
         String[] feature = analysis_text(text);
         make_label(feature);
 
-        return synthesis(wavf, logf);
+        return synthesize(wavf, logf);
     }
 
-    public int synthesis(String[] feature, FileOutputStream wavf, FileOutputStream logf) {
+    public int synthesize(String[] feature, FileOutputStream wavf, FileOutputStream logf) {
         if (!availableEngine())
             return -1;
 
         make_label(feature);
-        return synthesis(wavf, logf);
+        return synthesize(wavf, logf);
     }
 
-    public int synthesis(String text) {
-        return synthesis(text, null, null);
+    public int synthesize(String text) {
+        return synthesize(text, null, null);
     }
 
-    public int synthesis(FileOutputStream wavf, FileOutputStream logf) {
+    public int synthesize(FileOutputStream wavf, FileOutputStream logf) {
         long t1, t2;
         if (jpcommon == null)
             return -1;
@@ -356,7 +345,7 @@ Debug.printf(Level.FINER, "++synthesize time[us]:%f", (t2 - t1) / 1e+03);
 //        System.err.printf("++accent_analysis time[us]:%f\n", (t3 - t2) / 1e+03);
     }
 
-    public String hankakuToZenkaku(String text) {
+    public static String hankakuToZenkaku(String text) {
         StringBuilder sb = new StringBuilder(text);
         for (int i = 0; i < sb.length(); i++) {
             char c = sb.charAt(i);
