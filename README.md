@@ -1,14 +1,14 @@
 [![Release](https://jitpack.io/v/umjammer/Gyutan.svg)](https://jitpack.io/#umjammer/Gyutan)
 [![Java CI](https://github.com/umjammer/Gyutan/actions/workflows/maven.yml/badge.svg)](https://github.com/umjammer/Gyutan/actions/workflows/maven.yml)
 [![CodeQL](https://github.com/umjammer/Gyutan/actions/workflows/codeql.yml/badge.svg)](https://github.com/umjammer/Gyutan/actions/workflows/codeql.yml)
-![Java](https://img.shields.io/badge/Java-8-b07219)
-[![Parent](https://img.shields.io/badge/Parent-vavi--speech-pink)](https://github.com/umjammer/vavi-speech)
+![Java](https://img.shields.io/badge/Java-17-b07219)
+[![Parent](https://img.shields.io/badge/Parent-vavi--speech2-pink)](https://github.com/umjammer/vavi-speech2)
 
 # Gyutan
 
-<img src="https://user-images.githubusercontent.com/493908/213547722-3ee7bd92-9adb-415d-bac4-b318ec1174a7.png" width="160"/>
+<img src="https://user-images.githubusercontent.com/493908/213547722-3ee7bd92-9adb-415d-bac4-b318ec1174a7.png" width="160" alt="Gyutan Image"/>
 
-mavenized Gyutan
+mavenized Gyutan (text -> label -> [sasakama](https://github.com/umjammer/Sasakama) -> speech)
 
 ## Install
 
@@ -19,7 +19,7 @@ mavenized Gyutan
 ```
  * download HTS voice
 ```shell
- $ cd $SRC_BASE
+ $ cd $RESOURCE_BASE
  $ git clone https://github.com/icn-lab/htsvoice-tohoku-f01.git
 ```
  * set "fn.voice" in local.properties
@@ -27,23 +27,15 @@ mavenized Gyutan
  $ cd $SRC_BASE/Gyutan
  $ vi local.properties
  $ cat local.properties
- fn.voice=/Users/nsano/src/java/htsvoice-tohoku-f01/tohoku-f01-neutral.htsvoice
-```
- * install sen
-```shell
- $ cd $SRC_BASE
- $ git clone https://gitlab.com/umjammer/sen.git
- $ cd $SRC_BASE/sen
- $ export SEN_HOME=$SRC_BASE/sen/src/main/home
- $ mvn install
+ fn.voice=/Users/foo/src/resources/htsvoice-tohoku-f01/tohoku-f01-neutral.htsvoice
 ```
  * set "sen.home" in local.properties
 ```shell
  $ cd $SRC_BASE/Gyutan
  $ vi local.properties
  $ cat local.properties
- fn.voice=/Users/nsano/src/java/htsvoice-tohoku-f01/tohoku-f01-neutral.htsvoice
- sen.home=/Users/nsano/src/java/sen/src/main/home
+ fn.voice=/Users/foo/src/resources/htsvoice-tohoku-f01/tohoku-f01-neutral.htsvoice
+ sen.home=/Users/foo/src/java/Gyutan/sen
 ```
 
 ## Usage
@@ -65,10 +57,11 @@ mavenized Gyutan
 
  * make njd as user friendly library
  * ~~mora_size == 0 -> no pronounce -> delete~~
- * github ci needs to download and build dictionary
+ * ~~github ci needs to download and build dictionary~~
 
 ---
-[Original](https://github.com/icn-lab/Gyutan)
+
+# [Original](https://github.com/icn-lab/Gyutan)
 
 Copyright (c) 2015-2016 Intelligent Communication Network (Ito-Nose) Laboratory Tohoku University.   
 Copyright (c) 2001-2016 Nagoya Institute of Technology Department of Computer Science.   

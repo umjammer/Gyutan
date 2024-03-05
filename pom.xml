@@ -32,8 +32,13 @@
                   <arg line="-x ${sen.home}" />
                   <arg line="-m ${fn.voice}" />
                   <arg line="-ow ${wave}" />
+                  <arg line="-g -20" />
                   <arg value="${text}" />
                 </java>
+                <exec executable="play" outputproperty="ignore">
+                  <arg line="-v 1" />
+                  <arg value="${wave}" />
+                </exec>
               </target>
             </configuration>
           </plugin>
@@ -84,17 +89,15 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <version>3.11.0</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <encoding>UTF-8</encoding>
+          <release>17</release>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <version>3.2.2</version>
         <configuration>
           <argLine>
             -Djava.util.logging.config.file=${project.build.testOutputDirectory}/logging.properties
@@ -123,7 +126,7 @@
       <url>https://jitpack.io</url>
     </repository>
     <repository>
-      <id>gitlab-maven</id>
+      <id>gitlab-maven</id> <!-- sen -->
       <url>https://gitlab.com/api/v4/projects/18523814/packages/maven</url>
     </repository>
   </repositories>
@@ -133,7 +136,7 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.9.1</version>
+        <version>5.10.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -156,7 +159,7 @@
     <dependency>
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-commons</artifactId>
-      <version>1.1.8</version>
+      <version>1.1.10</version>
     </dependency>
 
     <dependency>
