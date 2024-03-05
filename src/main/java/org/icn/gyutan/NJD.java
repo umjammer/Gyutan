@@ -59,13 +59,11 @@ public class NJD {
 
     private int get_token_from_string(String str, int[] index, StringBuilder buff, char d) {
         buff.delete(0, buff.length());
-        char[] charat = str.toCharArray();
 
         if (index[0] == str.length())
             return 0;
 
-//        char c = str.charAt(index[0]);
-        char c = charat[index[0]];
+        char c = str.charAt(index[0]);
         if (c == d) {
             index[0]++;
             return 0;
@@ -75,8 +73,7 @@ public class NJD {
             index[0]++;
             if (index[0] == str.length())
                 return 0;
-//            c = str.charAt(index[0]);
-            c = charat[index[0]];
+            c = str.charAt(index[0]);
         }
 
         int i;
@@ -84,8 +81,7 @@ public class NJD {
             buff.append(c);
             index[0]++;
             if (index[0] < str.length())
-//                c = str.charAt(index[0]);
-                c = charat[index[0]];
+                c = str.charAt(index[0]);
         }
         if (c == d)
             index[0]++;
@@ -294,7 +290,7 @@ Debug.print(Level.WARNING, "FileInputStream should not be null.");
     }
 
     NJDNode remove_node(NJDNode node) {
-        NJDNode next = null;
+        NJDNode next;
 
         if (node == head && node == tail) {
             head = null;
